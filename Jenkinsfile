@@ -1,7 +1,7 @@
  pipeline{
     agent any
     tools{
-        maven 'mave_3_5_0'
+        maven 'maven_3_5_0'
     }
     stages{
         stage('Checkout Git branch'){
