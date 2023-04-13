@@ -18,16 +18,21 @@
         }
 
         stage('start container'){
-            sh 'docker compose up -d --no-color --wait'
+            steps{
+                sh 'docker compose up -d --no-color --wait'
+
+            }
         }
 
         stage('migrate data'){
+            steps{
             sh '''
-            docker exec -it mobile-api-laravel.test-1 bash
-            php artisan optimize:clear
-            php artisan migrate:fresh
-
-            '''
+                docker exec -it mobile-api-laravel.test-1 bash
+                php artisan optimize:clear
+                php artisan migrate:fresh
+                '''
+            }
+           
         }
 
 
