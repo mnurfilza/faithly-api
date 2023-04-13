@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Db\User;
+namespace App\Repositories\Db;
 
 use App\Interfaces\UserInterface;
 use App\Models\User;
@@ -48,7 +48,8 @@ class UserRepository implements UserInterface
             ->query()
             ->join('user_detail', 'users.id', '=', 'user_detail.user_id')
             ->join('statuses', 'users.status_id', '=', 'statuses.id')
-            ->join('role', 'user_detail.role_id', '=', 'role.id');
+            ->join('role', 'user_detail.role_id', '=', 'role.id')
+            ->whereNot('user.id','=',$data['user_id']);
 
         if ($data['search'] !== "") {
             $query

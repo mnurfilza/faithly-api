@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecase\User;
+namespace App\Usecase;
 
 use App\Helper\ApiResponse;
 use App\Interfaces\UserInterface;
@@ -31,7 +31,7 @@ class UserUsecase implements UserUsecaseInterface
             'search' => $request->query('search') ?? '',
             'sort_by' => $request->query('sort_by') ?? 'asc',
             'order_by' => $request->query('order_by') ?? 'fullname',
-
+            'user_id'=>auth()->user()->id,
         ]);
 
 

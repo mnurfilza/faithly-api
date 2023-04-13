@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecase\Card;
+namespace App\Usecase;
 
 use App\Helper\ApiResponse;
 use App\Interfaces\CardRepositoryInterface;
@@ -60,14 +60,14 @@ class CardUsecase implements CardUsecaseInterface
     public function ListCard(Request $request)
     {
 
-        $resp = $this->detailUser->getUserDetailByUserId(auth()->user()->id);
+        $resp_detail = $this->detailUser->getUserDetailByUserId(auth()->user()->id);
         $resp = $this->cardRepo->ListCard([
             'perpage' => $request->query('perpage') ?? 10,
             'page' => $request->query('page') ?? 1,
             'search' => $request->query('search') ?? '',
             'sort_by' => $request->query('sort_by') ?? 'asc',
             'order_by' => $request->query('order_by') ?? 'card_number',
-            'user_detail_id' => $resp->id,
+            'user_detail_id' => $resp_detail->id,
         ]);
 
 

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\RoleRepositoryInterface;
-use App\Repositories\Db\role\RoleRepository;
+use App\Repositories\Db\RoleRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RoleRepositoryProvider extends ServiceProvider

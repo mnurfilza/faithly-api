@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Helper\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Interfaces\AuthUsecaseInterface;
-use App\Repositories\Db\role\RoleRepository;
 use Illuminate\Http\Request;
 
 

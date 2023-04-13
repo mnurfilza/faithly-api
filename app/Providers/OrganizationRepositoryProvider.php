@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\OrganizationInterface;
-use App\Repositories\Db\Organization\OrganizationRepository;
+use App\Repositories\Db\OrganizationRepository;
 use Illuminate\Support\ServiceProvider;
 
 class OrganizationRepositoryProvider extends ServiceProvider

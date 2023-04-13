@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\ForgotPasswordInterface;
-use App\Repositories\Db\ForgotPassword\ForgotPasswordRepository;
+use App\Repositories\Db\ForgotPasswordRepository;
 use Illuminate\Support\ServiceProvider;
 
 class ForgotPasswordProvider extends ServiceProvider

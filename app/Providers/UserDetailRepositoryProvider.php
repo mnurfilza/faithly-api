@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\UserDetailRepoInterface;
-use App\Repositories\Db\UserDetail\UserDetailRepository;
+use App\Repositories\Db\UserDetailRepository;
 use Illuminate\Support\ServiceProvider;
 
 class UserDetailRepositoryProvider extends ServiceProvider

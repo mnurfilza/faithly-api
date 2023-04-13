@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Usecase\User;
+namespace App\Usecase;
 
 use App\Helper\ApiResponse;
+use App\Interfaces\AuthUsecaseInterface;
 use App\Interfaces\ForgotPasswordInterface;
 use App\Interfaces\OrganizationInterface;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\UserDetailRepoInterface;
 use App\Interfaces\UserInterface;
-use App\Interfaces\AuthUsecaseInterface;
 use App\Mail\SendEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Db\Card;
+namespace App\Repositories\Db;
 
 use App\Interfaces\CardRepositoryInterface;
 use App\Models\CardPayment;

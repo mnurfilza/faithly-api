@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Authentication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User;
+use App\Http\Controllers\Api\FriendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,6 @@ Route::prefix('v1')->group(function(){
     Route::post('/card',[CardController::class,'CardRegist']);
     Route::post('/resend-link',[Authentication::class,'ResendLink']);
 
-    Route::controller(User::class)->group(function (){
-        Route::get('/user','listUser');
-    });
         Route::middleware('auth:api')->group(function(){
             Route::controller(CardController::class)->group(function(){
                 Route::get('/card','ListCardPayment');
@@ -42,9 +40,10 @@ Route::prefix('v1')->group(function(){
 
             });
 
-
-
-
+            Route::controller(FriendController::class)->group(function (){
+                Route::post('/friend','AddFriend');
+                Route::get('/friend','ListFriend');
+            });
 
 
         });

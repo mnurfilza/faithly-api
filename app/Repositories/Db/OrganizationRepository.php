@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Db\Organization;
+namespace App\Repositories\Db;
 
 use App\Interfaces\OrganizationInterface;
 use App\Models\Organization;

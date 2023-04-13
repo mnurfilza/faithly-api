@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Db\ForgotPassword;
+namespace App\Repositories\Db;
 
 use App\Interfaces\ForgotPasswordInterface;
 use App\Models\ForgotPassword;
@@ -20,8 +20,8 @@ class ForgotPasswordRepository implements ForgotPasswordInterface
         return $this->forgotPass->create([
             'email' => $data['email'],
             'token' => $data['token'],
-            'isUsed'=>false,
-            'created_at'=>$data['created_at'],
+            'isUsed' => false,
+            'created_at' => $data['created_at'],
         ]);
 
     }
@@ -31,7 +31,7 @@ class ForgotPasswordRepository implements ForgotPasswordInterface
         // TODO: Implement updateData() method.
         $resp = $this->forgotPass->where('token', $data)->first();
         $resp->isUsed = true;
-        return $resp-save();
+        return $resp - save();
 
     }
 

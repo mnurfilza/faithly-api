@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\CardRepositoryInterface;
-use App\Repositories\Db\Card\CardRepository;
+use App\Repositories\Db\CardRepository;
 use Illuminate\Support\ServiceProvider;
 
 class CardRepositoryProvider extends ServiceProvider

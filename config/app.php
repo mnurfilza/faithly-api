@@ -205,6 +205,7 @@ return [
         App\Providers\RoleUsecaseProvider::class,
         App\Providers\OrganizationRepositoryProvider::class,
         App\Providers\ForgotPasswordProvider::class,
+        App\Providers\FriendlistProvider::class,
 
 
 

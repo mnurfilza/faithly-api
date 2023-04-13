@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Db\UserDetail;
+namespace App\Repositories\Db;
 
 use App\Interfaces\UserDetailRepoInterface;
 use App\Models\UserDetail;

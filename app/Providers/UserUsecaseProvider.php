@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Interfaces\UserUsecaseInterface;
-use App\Usecase\User\AuthUsecase;
 use App\Interfaces\AuthUsecaseInterface;
-use App\Usecase\User\UserUsecase;
+use App\Interfaces\UserUsecaseInterface;
+use App\Usecase\AuthUsecase;
+use App\Usecase\UserUsecase;
 use Illuminate\Support\ServiceProvider;
 
 class UserUsecaseProvider extends ServiceProvider

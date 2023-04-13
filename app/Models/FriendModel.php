@@ -11,10 +11,8 @@ class FriendModel extends Model
 
     protected $fillable = [
         'id',
-        'user_detail_id',
-        'card_number',
-        'exp_date',
-        'code_verification',
+        'user_id',
+        'friend_id',
         'status_id',
     ];
     protected $table = 'friend';
