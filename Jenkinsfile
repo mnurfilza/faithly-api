@@ -1,7 +1,7 @@
  pipeline{
     agent any
     tools{
-        maven 'Maven 3.9.1'
+        maven 'Maven 3.3.9'
     }
     stages{
         stage('Checkout Git branch'){
