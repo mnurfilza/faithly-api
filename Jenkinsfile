@@ -1,7 +1,8 @@
  pipeline{
     agent any
-    tools{
-        maven 'Maven 3.3.9'
+    tools{ 
+        maven 'Maven 3.8.6'
+        jdk 'Java 17.0.4.1'
     }
     stages{
         stage('Checkout Git branch'){
@@ -13,7 +14,13 @@
 
         stage('Prune docker data'){
             steps{
-                sh 'docker system prune -a volumes -f'
+                sh '''
+                    sudo groupadd docker
+                    sudo usermod -aG docker $USER
+                    newgrp docker
+                    docker system prune -a --volumes -f
+
+                '''
             }
         }
 
