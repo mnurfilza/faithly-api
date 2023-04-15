@@ -31,7 +31,7 @@ class FriendRepository implements FriendlistInterface
             ->join('user_detail', 'user_detail.user_id', '=', 'users.id')
             ->join('statuses', 'friend.status_id', '=', 'statuses.id')
             ->join('role', 'user_detail.role_id', '=', 'role.id')
-            ->where('statuses.name', '=', 'active')
+//            ->where('statuses.name', '=', 'active')
             ->where('friend.user_id', '=', $data['user_id']);
 
         if ($data['search'] !== "") {
@@ -43,9 +43,11 @@ class FriendRepository implements FriendlistInterface
         $result = $query
             ->offset(($data['page'] - 1) * $data['perpage'])
             ->limit($data['perpage'])
-            ->get(array('users.*',
+            ->get(array('users.id as user_id',
                 'user_detail.phone_number as phone_number',
                 'user_detail.fullname as fullname',
+                'users.email as email',
+                'statuses.name as status',
                 'role.name as role_type'));
         $total = $query->count();
 

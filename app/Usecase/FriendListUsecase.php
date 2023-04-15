@@ -45,7 +45,7 @@ class FriendListUsecase implements FriendUsecaseInterface
             'page' => $data['page'] ?? 1,
             'search' => $data['search'] ?? '',
             'sort_by' => $data['sort_by'] ?? 'asc',
-            'order_by' => $data['order_by'] ?? 'status_id',
+            'order_by' => $data['order_by'] ?? 'friend.status_id',
             'user_id' => auth()->user()->id,
         ]);
 
