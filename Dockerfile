@@ -3,7 +3,6 @@ FROM php:8.1-fpm-alpine
 RUN apk update && \
     apk add --no-cache \
         nginx \
-        supervisor \
         openssl \
         freetype \
         libpng \
@@ -26,7 +25,6 @@ RUN apk update && \
 
 RUN rm -rf /etc/nginx/conf.d/*
 COPY nginx.conf /etc/nginx/conf.d/
-COPY supervisord.conf /etc/supervisor/conf.d/
 
 WORKDIR /var/www/html
 COPY . /var/www/html

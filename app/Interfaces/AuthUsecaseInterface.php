@@ -12,6 +12,8 @@ interface AuthUsecaseInterface{
 
     public function ResendLinkVerificationEmail(Request $request);
 
+    public function VerifiedEmail(Request $request);
+
  }
 
 

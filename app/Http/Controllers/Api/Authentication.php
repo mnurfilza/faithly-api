@@ -434,7 +434,7 @@ class Authentication extends Controller
             ];
 
             $request->validate([
-                'username' => 'required|min:3|regex:/^[a-zA-Z]+$/',
+                'username' => 'required',
                 'password' => 'required',
 
             ], $messages);

@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://faithly.com.stability.digital/api/v1",
             "description": "Demo API Server"
         }
     ],

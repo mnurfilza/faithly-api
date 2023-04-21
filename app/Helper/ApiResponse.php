@@ -16,7 +16,7 @@ class ApiResponse
         ], $code);
     }
 
-    public static function errorResponse($message = null, $debug_param = null, $code)
+    public static function errorResponse($message = null, $debug_param = null, $code = 200)
     {
 
 

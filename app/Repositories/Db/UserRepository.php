@@ -4,6 +4,7 @@ namespace App\Repositories\Db;
 
 use App\Interfaces\UserInterface;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -18,13 +19,14 @@ class UserRepository implements UserInterface
         $this->userModel = $user;
     }
 
-    public function storeUser($data)
+    public function storeUser($data, $activationToken)
     {
         return $this->userModel->create([
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'status_id' => 1,
+            'activation_token' => $activationToken,
         ]);
     }
 
@@ -39,7 +41,7 @@ class UserRepository implements UserInterface
 
     public function getuserByEmail($email)
     {
-        return $this->userModel->where('email', $email)->first();
+        return $this->userModel->where('email', $email)->orWhere('username', $email)->first();
     }
 
     public function ListUser($data)
@@ -49,7 +51,7 @@ class UserRepository implements UserInterface
             ->join('user_detail', 'users.id', '=', 'user_detail.user_id')
             ->join('statuses', 'users.status_id', '=', 'statuses.id')
             ->join('role', 'user_detail.role_id', '=', 'role.id')
-            ->whereNot('user.id','=',$data['user_id']);
+            ->whereNot('user.id', '=', $data['user_id']);
 
         if ($data['search'] !== "") {
             $query
@@ -112,6 +114,22 @@ class UserRepository implements UserInterface
                 'role.name as role_type'));
 
         return $query;
+    }
+
+
+    public function updateActivationTOken($data)
+    {
+        return $this->userModel->where('id', $data)->update(['activation_code_used' => true]);
+    }
+
+    public function getUserByTokenActivation($data)
+    {
+        return $this->userModel->where('activation_token', $data)->first();
+    }
+
+    public function verifiedUser($data)
+    {
+        return $this->userModel->where('id', $data)->update(['email_verified_at' => Carbon::now(), 'status_id' => 3]);
     }
 }
 

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\RoleUsecaseInterface;
+use App\Usecase\RoleUsecase;
 use Illuminate\Support\ServiceProvider;
 
 class RoleUsecaseProvider extends ServiceProvider
@@ -12,6 +14,8 @@ class RoleUsecaseProvider extends ServiceProvider
     public function register(): void
     {
         //
+
+        $this->app->bind(RoleUsecaseInterface::class, RoleUsecase::class);
     }
 
     /**

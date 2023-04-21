@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -206,10 +206,9 @@ return [
         App\Providers\OrganizationRepositoryProvider::class,
         App\Providers\ForgotPasswordProvider::class,
         App\Providers\FriendlistProvider::class,
-
-
-
-
+        App\Providers\RoleUsecaseProvider::class,
+        App\Providers\SubscriptionProvider::class,
+        App\Providers\CouponProvider::class
 
 
     ],
@@ -229,6 +228,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
+        'Session' => 'Illuminate\Support\Facades\Session'
     ])->toArray(),
 
 ];

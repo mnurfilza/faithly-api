@@ -21,4 +21,9 @@ class RoleRepository implements RoleRepositoryInterface
     {
         return $this->role->where('name', '=', $name)->first();
     }
+
+    public function getListRole()
+    {
+        return $this->role->all();
+    }
 }
