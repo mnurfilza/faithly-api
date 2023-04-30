@@ -9,6 +9,7 @@ class PaymentRepository implements PaymentInterface
 
     public function addPayment($data)
     {
+        
     }
 
     public function listPayment($data)

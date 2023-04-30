@@ -15,13 +15,24 @@ class Subscription extends Seeder
     {
         $subs = [
             [
-                'name'=>'Individual'
+                'name'=>'Individual',
+                'users'=> 0,
+                'yearly_amount'=>0.0,
+                'monthly_amount'=>0.0
             ],
             [
-                'name'=>'Parent'
+                'name'=>'Parent',
+                'users'=> 0,
+                'yearly_amount'=>0.0,
+                'monthly_amount'=>0.0
+
             ],
             [
-                'name'=>'Organization'
+                'name'=>'Organization',
+                'users'=> 0,
+                'yearly_amount'=>0.0,
+                'monthly_amount'=>0.0
+
             ],
         ];
 

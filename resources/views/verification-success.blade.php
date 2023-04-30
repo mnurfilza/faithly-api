@@ -59,11 +59,12 @@
                     <p class="font-medium text-center text-sm mt-2">
                         Your account has been activated successfully
                     </p>
-                    <button
+                    <a
+                        href="{{route('payment_init')}}"
                         class="bg-secondary mx-4 text-center mt-9 hover:bg-[#6f43ff] transition-all active:bg-[#6f43ff] font-medium text-white rounded-xl py-2.5 w-full"
                     >
                         Next
-                    </button>
+                    </a>
                 </div>
                 <!-- RIGHT COLUMN -->
                 <div
@@ -79,12 +80,12 @@
         </div>
     </div>
     <img
-        src="./assets//images/oval-left.png"
+        src="assets/images/oval-left.png"
         class="absolute top-0 left-0 z-0"
         alt=""
     />
     <img
-        src="assets//images/oval-right.png"
+        src="assets/images/oval-right.png"
         class="absolute bottom-0 z-0 right-0"
         alt=""
     />

@@ -33,4 +33,9 @@ class UserDetailRepository implements UserDetailRepoInterface
     {
         return $this->userDetail->where('user_id',$id)->first();
     }
+
+    public function updateRole($data)
+    {
+        return $this->userDetail->where('user_id', $data['id'])->update(['role_id'=>$data['role_id'],'org_id'=>$data['org_id']]);
+    }
 }

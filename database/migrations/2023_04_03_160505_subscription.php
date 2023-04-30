@@ -14,11 +14,10 @@ return new class extends Migration
         //
         Schema::create('subscription', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('subs_type_id');
-            $table->foreign('subs_type_id')->references('id')->on('subscription_type');
             $table->string('name');
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('role');
+            $table->integer('users');
+            $table->float('yearly_amount');
+            $table->float('monthly_amount');
             $table->timestamps();
 
 

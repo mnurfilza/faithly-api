@@ -41,7 +41,10 @@ class UserRepository implements UserInterface
 
     public function getuserByEmail($email)
     {
-        return $this->userModel->where('email', $email)->orWhere('username', $email)->first();
+        return $this->userModel
+        ->query()
+        ->join('statuses','users.status_id','=','statuses.id')
+        ->where('email', $email)->orWhere('username', $email)->first(array('users.*','statuses.name as status'));
     }
 
     public function ListUser($data)

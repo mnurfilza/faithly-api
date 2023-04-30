@@ -34,6 +34,10 @@ class RoleSeeder extends Seeder
                 'name' => 'Organization Member',
 
             ],
+            [
+                'name' => 'Super Admin',
+
+            ],
         ];
 
         DB::table('role')->insert($role);

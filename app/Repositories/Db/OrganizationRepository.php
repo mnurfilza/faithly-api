@@ -16,7 +16,8 @@ class OrganizationRepository implements OrganizationInterface
     public function storeOrganization($data)
     {
         return $this->org->create([
-            'name' => $data['name']
+            'name' => $data['name'],
+            'number_users' => $data['number_users']
         ]);
     }
 }

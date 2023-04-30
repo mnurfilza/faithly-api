@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helper\WebHelper as HelperWebHelper;
 use App\Http\Controllers\Controller;
 use App\Interfaces\AuthUsecaseInterface;
 use App\Interfaces\RoleUsecaseInterface;
@@ -42,17 +43,18 @@ class UserWebController extends Controller
             ], $messages);
             $resp = $this->user->Login($request);
             $obj = json_decode($resp->getContent());
-
             if ($resp !== null && $resp->getStatusCode() !== 200) {
+
                 session()->put('error', $obj->meta->response_message);
                 return redirect()->back();
             }
+
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             session()->put('error', $th->getMessage());
             return redirect()->back()->withInput();
-
         }
-        return redirect('/showRegister')->with(['data', 'Success Login']);
+        return redirect(HelperWebHelper::routeRedirectlogin($obj->data->role))->with(['data', 'Success Login']);
     }
 
     public function showRegister(Request $request)

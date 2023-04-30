@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('disc');
             $table->string('coupon_code');
-            $table->string('coupon_type');
-            $table->date('exp_date');
+            $table->string('coupon_type')->nullable();
+            $table->date('exp_date')->nullable();
             $table->timestamps();
 
         });

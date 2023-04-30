@@ -8,6 +8,7 @@ interface SubscriptionUsecaseInterface
 {
 
     public function updateSubscription(Request $request);
-    public function listSubs(Request $request);
+    public function listSubs($request);
 
+    public function contribute($data);
 }

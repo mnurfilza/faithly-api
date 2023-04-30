@@ -17,15 +17,13 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('role');
 
             $table->unsignedBigInteger('org_id')->nullable();
-            $table->foreign('org_id')->references('id')->on('organization');
 
             //if null it mean the user use free subs
             $table->unsignedBigInteger('subs_id')->nullable();
-            $table->foreign('subs_id')->references('id')->on('subscription');
 
             $table->unsignedBigInteger('parent_id')->nullable();
 
@@ -33,7 +31,6 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('year_of_birth');
             $table->timestamps();
-
 
         });
     }

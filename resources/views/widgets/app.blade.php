@@ -19,6 +19,10 @@
 
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="../css/output.css"/>
     <title>Subscription</title>
@@ -46,6 +50,22 @@
         \Illuminate\Support\Facades\Session::forget('error')
     @endphp
 @endif
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    // https://github.com/sparksuite/simplemde-markdown-editor
+    var simplemde1 = new SimpleMDE({
+        element: document.getElementById("terms_and_cond"),
+    });
+    var simplemde2 = new SimpleMDE({
+        element: document.getElementById("privacy_policy"),
+    });
+    var simplemde3 = new SimpleMDE({
+        element: document.getElementById("faq_md"),
+    });
+    console.log(simplemde1.value())
+    console.log(simplemde2.value())
+    console.log(simplemde3.value())
+</script>
 <script src="../js/index.min.js"></script>
 <script src="../js/aside.js"></script>
 </body>

@@ -31,7 +31,7 @@ class ForgotPasswordRepository implements ForgotPasswordInterface
         // TODO: Implement updateData() method.
         $resp = $this->forgotPass->where('token', $data)->first();
         $resp->isUsed = true;
-        return $resp - save();
+        return $resp->save();
 
     }
 

@@ -18,7 +18,6 @@ class CouponSeed extends Seeder
                 'name'=>'Individual',
                 'disc'=>'0',
                 'coupon_code'=>'xxx'
-
             ],
             [
                 'name'=>'Parent',

@@ -106,12 +106,15 @@ class AuthUsecase implements AuthUsecaseInterface
     public function Login(Request $request)
     {
         //only verified account can login
-
         $res = $this->eloquentUser->getuserByEmail($request['username']);
         if ($res === null) {
             return ApiResponse::errorResponse("User Undefined", '', 404);
         }
 
+        if($res->status !== 'Active')
+        {
+            return ApiResponse::errorResponse("User Not Active", '', 403);
+        }
         $detail = $this->eloquentUser->userRole($res->id);
 
         if ($token = JWTAuth::attempt(['username' => $res['username'], 'password' => $request['password']])) {
@@ -235,16 +238,16 @@ class AuthUsecase implements AuthUsecaseInterface
             return ApiResponse::errorResponse('Token Cannot Be Empty', '', 400);
         }
 
-        $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
-//        $created_date = new Carbon($token['created_at']);
-//        $current_date = Carbon::now();
-//
-//        $duration = $current_date->diffInMinutes($created_date);
-//
-//        //put duration on env file, so in the future will be easy to adjust
-//        if ($duration >= 5) {
-//            return ApiResponse::errorResponse("Token Expired", '', 401);
-//        }
+       $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
+    //    $created_date = new Carbon($token['created_at']);
+    //    $current_date = Carbon::now();
+
+    //    $duration = $current_date->diffInMinutes($created_date);
+
+    //    //put duration on env file, so in the future will be easy to adjust
+    //    if ($duration >= 5) {
+    //        return ApiResponse::errorResponse("Token Expired", '', 401);
+    //    }
 
         if ($token->activation_code_used) {
             return ApiResponse::errorResponse('Token Already Used', '', 400);
