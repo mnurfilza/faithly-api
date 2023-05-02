@@ -13,7 +13,7 @@ class WebHelper{
             case 'organization':
                 return 'organization';
                 break;
-            case 'super admin':
+            case 'super admin' || 'admin':
                 return 'admin';
                 break;
             default:

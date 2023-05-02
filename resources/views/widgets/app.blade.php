@@ -38,6 +38,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 @if(\Illuminate\Support\Facades\Session::has('error'))
+
     <script>
         toastr.options =
             {
@@ -48,6 +49,20 @@
     </script>
     @php
         \Illuminate\Support\Facades\Session::forget('error')
+    @endphp
+@endif
+@if(\Illuminate\Support\Facades\Session::has('success'))
+
+    <script>
+        toastr.options =
+            {
+                "closeButton": true,
+                "progressBar": true
+            }
+        toastr.success('{{\Illuminate\Support\Facades\Session::get('success')}}');
+    </script>
+    @php
+        \Illuminate\Support\Facades\Session::forget('success')
     @endphp
 @endif
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
@@ -66,6 +81,56 @@
     console.log(simplemde2.value())
     console.log(simplemde3.value())
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var data = {
+        datasets: [
+            {
+                data: [30, 20, 50],
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            },
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: ["30%", "20%", "50%"],
+    };
+
+    var options = {
+        responsive: true,
+        legend: {
+            display: false,
+        },
+        datalabels: {
+            display: true,
+        },
+    };
+
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myChart").getContext("2d");
+    // Create the chart using the chart.js library
+    var myChart = new Chart(ctx, {
+        type: "pie",
+        data: data,
+        options: options,
+    });
+</script>
+<script>
+    const dismissBtn = document.querySelector(".dismiss");
+    const searchInput = document.querySelector(".search-input");
+
+    searchInput.addEventListener("keyup", () => {
+      if (document.querySelector(".search-input").value.length > 0) {
+        dismissBtn.classList.remove("hidden");
+      } else {
+        dismissBtn.classList.add("hidden");
+      }
+    });
+
+    dismissBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      dismissBtn.classList.add("hidden");
+    });
+  </script>
 <script src="../js/index.min.js"></script>
 <script src="../js/aside.js"></script>
 </body>

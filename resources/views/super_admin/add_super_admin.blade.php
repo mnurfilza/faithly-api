@@ -7,7 +7,7 @@
                 class="shadow-[0px_4px_15px_rgba(9,67,111,0.15)] bg-white rounded-xl mt-20 p-5 py-16 pb-10"
             >
                 <h4 class="font-medium text-2xl text-center">
-                    Add New Super Admin
+                    Add New Sub Admin
                 </h4>
                 <div class="flex md:flex-row flex-col items-center justify-center gap-10 pt-20 ">
                     <div
@@ -32,26 +32,9 @@
                             class="opacity-0 absolute w-full h-full top-0 left-0"
                         />
                     </div>
-                    <form
-                        class="w-full max-w-[700px] pb-14 2xl:py-28 flex flex-col items-center"
-                    >
+                    <form action="{{route('add-admin')}}" method="POST" class="w-full max-w-[700px] pb-14 2xl:py-28 flex flex-col items-center">
+                        @csrf
                         <div class="flex md:flex-row flex-col gap-3 w-full mt-6">
-                            <div class="w-full">
-                                <p
-                                    class="text-[#474A56] mb-1 font-semibold w-full text-start"
-                                >
-                                    Choose Role
-                                </p>
-                                <select
-                                    class="block bg-white border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
-                                    name=""
-                                    id=""
-                                >
-                                    <option value="1">Admin</option>
-                                    <option value="1">Super Admin</option>
-                                    <option value="1">Child</option>
-                                </select>
-                            </div>
                             <div class="w-full">
                                 <p
                                     class="text-[#474A56] mb-1 font-semibold w-full text-start"
@@ -61,7 +44,8 @@
                                 <input
                                     placeholder="Enter phone number"
                                     class="block border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
-                                    type="number"
+                                    type="text"
+                                    name="phone_number"
                                 />
                             </div>
                         </div>
@@ -76,6 +60,7 @@
                                     placeholder="Enter Name"
                                     class="block border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
                                     type="text"
+                                    name="fullname"
                                 />
                             </div>
                             <div class="w-full">
@@ -88,6 +73,7 @@
                                     placeholder="Enter username"
                                     class="block border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
                                     type="text"
+                                    name="username"
                                 />
                             </div>
                         </div>
@@ -102,18 +88,20 @@
                                     placeholder="Enter email"
                                     class="block border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
                                     type="email"
+                                    name="email"
                                 />
                             </div>
                             <div class="w-full">
                                 <p
                                     class="text-[#474A56] mb-1 font-semibold w-full text-start"
                                 >
-                                    Passcode
+                                    Password
                                 </p>
                                 <input
                                     placeholder="Enter phone number"
                                     class="block border placeholder:text-[#DADADA] py-2.5 pl-5 w-full rounded-2xl"
                                     type="password"
+                                    name="password"
                                 />
                             </div>
                         </div>
@@ -140,7 +128,7 @@
                             </div>
                         </div>
                         <button
-                            type="button"
+                            type="submit"
                             class="lg:text-sm bg-secondary 2xl:text-base mt-16 text-white rounded-2xl block py-3 w-full max-w-[250px] mx-auto text-center"
                         >
                             Add New Super Admin

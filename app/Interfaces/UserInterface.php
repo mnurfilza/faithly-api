@@ -17,6 +17,12 @@ interface UserInterface{
 
     public  function  updateActivationTOken($data);
 
+
+    public  function  getLisChild($data);
+    public  function getListAdmin($data);
+
+
+
 }
 
 

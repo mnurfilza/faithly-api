@@ -20,7 +20,6 @@ Route::get('/', function () {
 });
 
 //view
-Route::middleware(['web'])->group(function () {
     Route::get('/showLogin', [\App\Http\Controllers\Web\UserWebController::class, 'showLoginForm'])->name('showLogin');
     Route::get('/showRegister', [\App\Http\Controllers\Web\UserWebController::class, 'showRegister'])->name('showRegister');
     Route::get('/role', [\App\Http\Controllers\Web\RoleController::class, 'getListRole']);
@@ -38,8 +37,32 @@ Route::middleware(['web'])->group(function () {
     Route::get('/payment_init',[PaymentController::class,'PaymentInit'])->name('payment_init');
 
     Route::get('/activate',[\App\Http\Controllers\Web\UserWebController::class,'verifiedEmail'])->name('activate');
-    Route::post('/updateSubscription',[SubscriptionWebController::class,'updateSubscription'])->name('updateSubscription');
+
+Route::middleware('role')->group(function () {
+
+    Route::get('/add-new-card',function (){
+        return view('general.add-new-card');
+    })->name('add-new-card');
+
+    Route::get('/bible-verse',function (){
+        return view('general.bible-verse');
+    })->name('bible-verse');
+
+    Route::get('/broad-spectrum',function (){
+        return view('general.broad-spectrum');
+    })->name('broad-spectrum');
+
+    Route::get('/friend',function (){
+        return view('general.friend');
+    })->name('friend');
+
+    Route::get('/group-detail',function (){
+        return view('general.group-detail');
+    })->name('group-detail');
+
+
     Route::prefix('admin')->group(function (){
+        Route::post('/updateSubscription',[SubscriptionWebController::class,'updateSubscription'])->name('updateSubscription');
         Route::get('/subscription', [SubscriptionWebController::class, 'listSubs'])->name('subscription');
         Route::get('/coupon',[\App\Http\Controllers\Web\CouponController::class, 'listCoupon'])->name('coupon');
         Route::get('/',[\App\Http\Controllers\Web\DashboardController::class,'index']);
@@ -47,9 +70,7 @@ Route::middleware(['web'])->group(function () {
             return view('super_admin.terms_and_condition');
         });
 
-        Route::get('/super_admin_list',function (){
-            return view('super_admin.super_admin_list');
-        })->name('super_admin_list');
+        Route::get('/super_admin_list',[\App\Http\Controllers\Web\UserWebController::class,'listSuperAdmin'])->name('super_admin_list');
 
         Route::get('/add_super_admin',function (){
             return view('super_admin.add_super_admin');
@@ -75,6 +96,8 @@ Route::middleware(['web'])->group(function () {
             return view('super_admin.add-question');
         })->name('add-question');
 
+        Route::post('/add-admin',[\App\Http\Controllers\Web\UserWebController::class,'addSubAdmin'])
+            ->name('add-admin');
     });
 
     Route::prefix('parent')->group(function (){

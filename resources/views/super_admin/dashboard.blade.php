@@ -181,7 +181,7 @@
                         alt=""
                     />
                     <div class="flex flex-col">
-                        <p class="mt-4 text-3xl font-bold leading-3">10</p>
+                        <p class="mt-4 text-3xl font-bold leading-3">{{$childTotal}}</p>
                         <p class="mt-4 font-medium text-sm">Total Children</p>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                         Super Admin
                     </h3>
                     <a
-                        href="view-all-super-admins.html"
+                        href="{{route('super_admin_list')}}"
                         class="font-semibold"
                     >
                         View All
@@ -245,54 +245,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td align="center" class="max-w-[90px]">
-                                <a href="edit-super-admin.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathanasdasdasd</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathan</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathan</a>
-                            </td>
-                            <td align="center"><a href="#">Child</a></td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">12312john@gmail.com</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">+1 234567899010</a>
-                            </td>
-                            <td align="center" class="text-green-500 font-semibold">
-                                <a href="edit-super-admin.html">Active</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="center" class="max-w-[90px]">
-                                <a href="edit-super-admin.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathanasdasdasd</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathan</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">Jonathan</a>
-                            </td>
-                            <td align="center"><a href="#">Child</a></td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">12312john@gmail.com</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-super-admin.html">+1 234567899010</a>
-                            </td>
-                            <td align="center" class="text-red-500 font-semibold">
-                                <a href="edit-super-admin.html">Inactive</a>
-                            </td>
-                        </tr>
+                        @foreach($admins as $item)
+                            <tr>
+                                <td align="center" class="max-w-[90px]">
+                                    <a href="edit-super-admin.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-super-admin.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-super-admin.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-super-admin.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center"><a href="#">{{$item->role_type}}</a></td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-super-admin.html">{{$item->email}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-super-admin.html">{{$item->phone_number}}</a>
+                                </td>
+                                <td align="center" class="text-green-500 font-semibold">
+                                    <a href="edit-super-admin.html">{{$item->status}}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -305,7 +284,7 @@
                         Users
                     </h3>
                     <a
-                        href="view-all-users.html"
+                        href="{{route('users')}}"
                         class="font-semibold"
                     >
                         View All
@@ -326,54 +305,35 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td align="center" class="max-w-[90px]">
-                                <a href="edit-users.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathanasdasdasd</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathan</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathan</a>
-                            </td>
-                            <td align="center"><a href="edit-users.html">Child</a></td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">12312john@gmail.com</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">+1 234567899010</a>
-                            </td>
-                            <td align="center" class="text-green-500 font-semibold">
-                                <a href="edit-users.html">Active</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="center" class="max-w-[90px]">
-                                <a href="edit-users.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathanasdasdasd</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathan</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">Jonathan</a>
-                            </td>
-                            <td align="center"><a href="edit-users.html">Child</a></td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">12312john@gmail.com</a>
-                            </td>
-                            <td align="center" class="max-w-[90px] break-words">
-                                <a href="edit-users.html">+1 234567899010</a>
-                            </td>
-                            <td align="center" class="text-red-500 font-semibold">
-                                <a href="edit-users.html">Inactive</a>
-                            </td>
-                        </tr>
+                        @foreach($users as $item)
+                            <tr>
+                                <td align="center" class="max-w-[90px]">
+                                    <a href="edit-users.html"><img src="../assets/images/Avatar1.png" alt=""/></a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-users.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-users.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-users.html">{{$item->fullname}}</a>
+                                </td>
+                                <td align="center"><a href="edit-users.html">{{$item->role_type}}</a></td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-users.html">{{$item->email}}</a>
+                                </td>
+                                <td align="center" class="max-w-[90px] break-words">
+                                    <a href="edit-users.html">{{$item->phone_number}}</a>
+                                </td>
+                                <td align="center" class="text-green-500 font-semibold">
+                                    <a href="edit-users.html">{{$item->status}}</a>
+                                </td>
+                            </tr>
+
+                        @endforeach
+
+
                         </tbody>
                     </table>
                 </div>

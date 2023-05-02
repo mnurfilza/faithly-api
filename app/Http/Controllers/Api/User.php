@@ -14,7 +14,6 @@ class User extends Controller
         public function __construct(UserUsecaseInterface $user)
 
         {
-
             $this->user = $user;
         }
 
@@ -328,7 +327,7 @@ class User extends Controller
     {
 
         try {
-            $resp = $this->user->ListUser($request);
+            $resp = $this->user->ListUser($request, false);
         }catch (\Throwable $th)
         {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);

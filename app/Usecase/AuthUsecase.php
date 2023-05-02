@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+
 class AuthUsecase implements AuthUsecaseInterface
 {
     protected $eloquentUser;
@@ -53,7 +54,7 @@ class AuthUsecase implements AuthUsecaseInterface
 
 
         //get role by name
-        $role = $this->roleEloq->getRoleByName('individual');
+        $role = $this->roleEloq->getRoleByName('Individual');
         if ($role == null) {
             return ApiResponse::errorResponse('Role' . ' ' . $request['role'] . ' ' . "Doesn't Exists", '', 404);
         }
@@ -105,14 +106,16 @@ class AuthUsecase implements AuthUsecaseInterface
 
     public function Login(Request $request)
     {
+
         //only verified account can login
         $res = $this->eloquentUser->getuserByEmail($request['username']);
         if ($res === null) {
+
             return ApiResponse::errorResponse("User Undefined", '', 404);
         }
 
-        if($res->status !== 'Active')
-        {
+        if ($res->status !== 'Active') {
+
             return ApiResponse::errorResponse("User Not Active", '', 403);
         }
         $detail = $this->eloquentUser->userRole($res->id);
@@ -120,6 +123,7 @@ class AuthUsecase implements AuthUsecaseInterface
         if ($token = JWTAuth::attempt(['username' => $res['username'], 'password' => $request['password']])) {
 
             return $this->respondWithToken($token, $detail['role_type']);
+
         }
 
 
@@ -238,18 +242,18 @@ class AuthUsecase implements AuthUsecaseInterface
             return ApiResponse::errorResponse('Token Cannot Be Empty', '', 400);
         }
 
-       $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
-    //    $created_date = new Carbon($token['created_at']);
-    //    $current_date = Carbon::now();
+        $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
+        $created_date = new Carbon($token['created_at']);
+        $current_date = Carbon::now();
 
-    //    $duration = $current_date->diffInMinutes($created_date);
+        $duration = $current_date->diffInMinutes($created_date);
 
-    //    //put duration on env file, so in the future will be easy to adjust
-    //    if ($duration >= 5) {
-    //        return ApiResponse::errorResponse("Token Expired", '', 401);
-    //    }
+        //put duration on env file, so in the future will be easy to adjust
+        if ($duration >= 5) {
+            return ApiResponse::errorResponse("Token Expired", '', 401);
+        }
 
-        if ($token->activation_code_used) {
+        if ($token->activation_token_used) {
             return ApiResponse::errorResponse('Token Already Used', '', 400);
         }
 

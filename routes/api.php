@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\Authentication;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\User;
+use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\FriendController;
+use App\Http\Controllers\Api\SubscriptionController;
+
+use App\Http\Controllers\Api\User;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,39 +20,38 @@ use App\Http\Controllers\Api\FriendController;
 */
 
 
-
-Route::prefix('v1')->group(function(){
-    Route::post('/register',[Authentication::class,'store']);
-    Route::post('/login',[Authentication::class,'login']);
-    Route::post('/forgot-password',[Authentication::class,'ForgotPassword']);
-    Route::post('/confirm-password',[Authentication::class,'confirmPassword']);
-    Route::post('/card',[CardController::class,'CardRegist']);
-    Route::post('/resend-link',[Authentication::class,'ResendLink']);
-
-        Route::middleware('auth:api')->group(function(){
-            Route::controller(CardController::class)->group(function(){
-                Route::get('/card','ListCardPayment');
-                Route::get('/card/{id}','getCardPayment');
-            });
-
-            Route::controller(User::class)->group(function (){
-                Route::get('/user','listUser');
-                Route::get('/user/{id}','getProfileUser');
-
-            });
-
-            Route::controller(FriendController::class)->group(function (){
-                Route::post('/friend','AddFriend');
-                Route::get('/friend','ListFriend');
-            });
+Route::prefix('v1')->group(function () {
+    Route::post('/register', [Authentication::class, 'store']);
+    Route::post('/login', [Authentication::class, 'login']);
+    Route::post('/forgot-password', [Authentication::class, 'ForgotPassword']);
+    Route::post('/confirm-password', [Authentication::class, 'confirmPassword']);
+    Route::post('/card', [CardController::class, 'CardRegist']);
+    Route::post('/resend-link', [Authentication::class, 'ResendLink']);
+    Route::controller(SubscriptionController::class)->group(function (){
+        Route::get('/subscription','listSubs');
+    });
 
 
+    Route::middleware('api')->group(function () {
+        Route::controller(CardController::class)->group(function () {
+            Route::get('/card', 'ListCardPayment');
+            Route::get('/card/{id}', 'getCardPayment');
         });
-});
+
+        Route::controller(User::class)->group(function () {
+            Route::get('/user', 'listUser');
+            Route::get('/user/{id}', 'getProfileUser');
+        });
+
+        Route::controller(FriendController::class)->group(function () {
+            Route::post('/friend', 'AddFriend');
+            Route::get('/friend', 'ListFriend');
+        });
+
+    });
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
+
 
 
