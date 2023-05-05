@@ -178,4 +178,14 @@ class UserUsecase implements UserUsecaseInterface
             'org_id' => $detailResp->org_id,
         ], "Success Register", 200);
     }
+
+    public function addChild($data)
+    {
+        // TODO: Implement addChild() method.
+    }
+
+    public function addOrganizationMember($data)
+    {
+        // TODO: Implement addOrganizationMember() method.
+    }
 }

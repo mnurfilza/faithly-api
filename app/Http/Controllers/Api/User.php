@@ -480,4 +480,13 @@ class User extends Controller
 
         return $resp;
     }
+
+
+    public function addUser(Request $request)
+    {
+
+
+
+
+    }
 }

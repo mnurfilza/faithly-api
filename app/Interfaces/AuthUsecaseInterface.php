@@ -4,7 +4,7 @@ namespace  App\Interfaces;
 use Illuminate\Http\Request;
 
 interface AuthUsecaseInterface{
-    public function Register(Request $request);
+    public function Register(Request $request, $platform);
     public function RegisterChildern(Request $request);
     public function Login(Request $request);
     public function ForgotPassword(Request $request);

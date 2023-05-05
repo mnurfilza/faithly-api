@@ -12,4 +12,8 @@ interface UserUsecaseInterface{
 
     public function addAdmin($data);
 
+    public  function  addChild($data);
+
+    public function addOrganizationMember($data);
+
 }

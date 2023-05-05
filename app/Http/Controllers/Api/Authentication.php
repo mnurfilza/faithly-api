@@ -105,7 +105,7 @@ class Authentication extends Controller
      *                type="object",
      *                description="List of data",
      *                    @OA\Property (
-             *                property="subs_id",
+     *                property="subs_id",
      *                        type="string",
      *                        description="",
      *                        nullable=false,
@@ -264,7 +264,7 @@ class Authentication extends Controller
                 'password' => 'required',
 
             ], $messages);
-            $resp = $this->user->Register($request);
+            $resp = $this->user->Register($request, 'mobile');
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
         }
@@ -977,6 +977,194 @@ class Authentication extends Controller
         return $re;
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/activate``",
+     *     tags={"Authentication"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *     @OA\Parameter(
+     *         name="Authentication",
+     *         description="Provides user authentication token",
+     *         in="header",
+     *         required=true
+     *     ),
+     *       @OA\Parameter(
+     *         name="token",
+     *         description="Provides user authentication token",
+     *         in="query",
+     *         required=true
+     *     ),
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Password Has been Updated"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *               @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Token Expired",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=401
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Token Expired"
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *              ),
+     *              @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *
+     *          )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Unknown Token",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Unknown Token"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+
+
+    public function VerifiedEmail(Request $request)
+    {
+        try {
+            $resp = $this->user->VerifiedEmail($request);
+        } catch (\Throwable $th) {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+        return $resp;
+
+    }
 
 
 }

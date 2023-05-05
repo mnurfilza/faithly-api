@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://faithly.com.stability.digital/api/v1",
+            "url": "http://my-default-host.com",
             "description": "Demo API Server"
         }
     ],
@@ -899,6 +899,188 @@
                                                     "description": "",
                                                     "type": "string",
                                                     "example": "Email Not Found",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/activate``": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "6d210c9b7f7eb88524c2d9a5e099c7e8",
+                "parameters": [
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "description": "Provides user authentication token",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Provides user authentication token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Password Has been Updated",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token Expired",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 401,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Token Expired",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown Token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Unknown Token",
                                                     "nullable": false
                                                 }
                                             },
@@ -1948,6 +2130,305 @@
                                                     "description": "",
                                                     "type": "string",
                                                     "example": "Email Not Found",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription": {
+            "get": {
+                "tags": [
+                    "subscription"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "subscription",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "perpage data",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "search",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "oreder_by",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "sort_by",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "description": "Provides user authentication token",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Success",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/CardPayment"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Data Not Found",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
                                                     "nullable": false
                                                 }
                                             },

@@ -35,7 +35,6 @@ Route::get('/', function () {
     })->name('loginChild');
 
     Route::get('/payment_init',[PaymentController::class,'PaymentInit'])->name('payment_init');
-
     Route::get('/activate',[\App\Http\Controllers\Web\UserWebController::class,'verifiedEmail'])->name('activate');
 
 Route::middleware('role')->group(function () {
@@ -71,7 +70,6 @@ Route::middleware('role')->group(function () {
         });
 
         Route::get('/super_admin_list',[\App\Http\Controllers\Web\UserWebController::class,'listSuperAdmin'])->name('super_admin_list');
-
         Route::get('/add_super_admin',function (){
             return view('super_admin.add_super_admin');
         })->name('add_super_admin');

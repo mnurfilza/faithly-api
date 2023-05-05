@@ -42,7 +42,7 @@ class AuthUsecase implements AuthUsecaseInterface
         $this->forgotPassw = $fg;
     }
 
-    public function Register(Request $request)
+    public function Register(Request $request, $platform)
     {
         $isEmailExist = $this->eloquentUser->checkEmail($request->email);
 
@@ -77,15 +77,19 @@ class AuthUsecase implements AuthUsecaseInterface
         ];
 
         $detailResp = $this->eloqUserDetail->Store($userDetail);
+        $link = env('BASE_URL').'/activate?token=' . $token;
+        if ($platform == 'mobile') {
+            $link = 'myapp:///success-verification?token=' . $token;
+
+        }
 
         $mailData = [
             'title' => 'Verification Email',
-            'body' => env('BASE_URL') . '/activate?token=' . $token
+            'body' => $link
         ];
 
         //send to email link forgot password
         $mail = Mail::to($request['email'])->send(new SendEmail($mailData, "Verification Email"));
-
         if ($mail instanceof \Illuminate\Mail\SentMessage) {
             //email sent success
             return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $request['email']], "Link Alredy Send to " . ' ' . $request['email']);

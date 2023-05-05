@@ -91,7 +91,7 @@ class UserWebController extends Controller
             ], $messages);
 
 
-            $resp = $this->user->Register($request);
+            $resp = $this->user->Register($request,'web');
             $obj = json_decode($resp->getContent());
             if ($resp !== null && $resp->getStatusCode() !== 200) {
                 session()->put('error', $obj->meta->response_message);

@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Helper\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
+use Spatie\FlareClient\Api;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -21,11 +23,11 @@ class ApiAuthMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['error' => 'Token tidak valid'], 401);
+                return ApiResponse::errorResponse('Token Invalid',"",401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['error' => 'Token sudah kadaluarsa'], 401);
+                return ApiResponse::errorResponse('Token Expired',"",401);
             } else {
-                return response()->json(['error' => 'Tidak ada token pada header permintaan'], 401);
+                return ApiResponse::errorResponse('Token Not Found In Header',"",401);
             }
         }
         return $next($request);

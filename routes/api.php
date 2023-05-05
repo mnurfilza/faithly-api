@@ -27,12 +27,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/confirm-password', [Authentication::class, 'confirmPassword']);
     Route::post('/card', [CardController::class, 'CardRegist']);
     Route::post('/resend-link', [Authentication::class, 'ResendLink']);
+    Route::post('/activate',[Authentication::class, 'VerifiedEmail']);
     Route::controller(SubscriptionController::class)->group(function (){
         Route::get('/subscription','listSubs');
     });
 
 
-    Route::middleware('api')->group(function () {
+    Route::middleware('jwt.api')->group(function () {
         Route::controller(CardController::class)->group(function () {
             Route::get('/card', 'ListCardPayment');
             Route::get('/card/{id}', 'getCardPayment');
