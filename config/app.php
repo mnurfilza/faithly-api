@@ -208,7 +208,15 @@ return [
         App\Providers\FriendlistProvider::class,
         App\Providers\RoleUsecaseProvider::class,
         App\Providers\SubscriptionProvider::class,
-        App\Providers\CouponProvider::class
+        App\Providers\CouponProvider::class,
+        App\Providers\BooksProvider::class,
+        App\Providers\VersesProvider::class,
+        App\Providers\ChaptersProvider::class,
+        App\Providers\HowToPlayProvider::class,
+        App\Providers\FaqProvider::class,
+        App\Providers\TopicProvider::class,
+        App\Providers\LevelProvider::class,
+        App\Providers\GroupInterfaceProvider::class
 
 
     ],

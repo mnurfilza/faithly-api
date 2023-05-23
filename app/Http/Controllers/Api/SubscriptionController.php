@@ -160,7 +160,41 @@ class SubscriptionController extends Controller
      *                property="data",
      *                type="array",
      *                description="List of data",
-     *                @OA\Items(ref="#/components/schemas/CardPayment")
+     *              @OA\Items(
+     *     @OA\Property (
+     *                  property="id",
+     *                  type="integer",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *                @OA\Property (
+     *                  property="name",
+     *                  type="string",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *                @OA\Property (
+     *                  property="users",
+     *                  type="integer",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *                @OA\Property (
+     *                  property="yearly_amount",
+     *                  type="integer",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *                 @OA\Property (
+     *                  property="monthly_amount",
+     *                  type="integer",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *              )
+     *
+     *
+     *
      *                 )
      *          )
      *      ),
@@ -339,6 +373,6 @@ class SubscriptionController extends Controller
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
         }
-        return ApiResponse::successResponse($resp, 'Success Get Subscription', 200);
+        return $resp;
     }
 }

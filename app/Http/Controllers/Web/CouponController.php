@@ -22,6 +22,7 @@ class CouponController extends Controller
         try {
             $resp = $this->coupon->listCoupon();
             $obj = json_decode($resp->getContent());
+            
             if ($resp !== null && $resp->getStatusCode() !== 200) {
                 session()->put('error', $obj->meta->response_message);
                 return redirect()->back();

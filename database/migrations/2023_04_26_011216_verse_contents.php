@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('version_id')->references('id')->on('versions');
             $table->unsignedBigInteger('verse_id');
             $table->foreign('verse_id')->references('id')->on('verses');
-            $table->string('content');
+            $table->text('content');
 
         });
     }

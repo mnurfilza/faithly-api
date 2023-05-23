@@ -7,6 +7,9 @@ interface UserDetailRepoInterface{
     public function getUserDetailByUserId($id);
     public function updateRole($data);
 
+    public function checkUserByYear($data);
+
+
 }
 
 

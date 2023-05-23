@@ -15,27 +15,28 @@ class FriendListUsecase implements FriendUsecaseInterface
     {
         $this->friend = $friend;
     }
+
     public function addFriend($data)
     {
 
-        if (auth()->user()->id == $data['user_id']){
-            return ApiResponse::errorResponse("Cannot Add Your Self As A Friend","",400);
+        if (auth()->user()->id == $data['user_id']) {
+            return ApiResponse::errorResponse("Cannot Add Your Self As A Friend", "", 400);
         }
         //add to friend
         $this->friend->connectFriend([
-            'user_id'=>auth()->user()->id,
-            'friend_id'=>$data['user_id'],
-            'status_id'=>1,
+            'user_id' => auth()->user()->id,
+            'friend_id' => $data['user_id'],
+            'status_id' => 1,
         ]);
 
         $this->friend->connectFriend([
-            'user_id'=>$data['user_id'],
-            'friend_id'=>auth()->user()->id,
-            'status_id'=>1,
+            'user_id' => $data['user_id'],
+            'friend_id' => auth()->user()->id,
+            'status_id' => 1,
         ]);
 
 
-        return ApiResponse::successResponse(['request_to'=>$data['user_id']],"Success Request Friend",200);
+        return ApiResponse::successResponse(['request_to' => $data['user_id']], "Success Request Friend", 200);
     }
 
     public function listFriend($data)
@@ -47,6 +48,7 @@ class FriendListUsecase implements FriendUsecaseInterface
             'sort_by' => $data['sort_by'] ?? 'asc',
             'order_by' => $data['order_by'] ?? 'friend.status_id',
             'user_id' => auth()->user()->id,
+            'isRequest' => $data['isRequest']
         ]);
 
 
@@ -63,6 +65,14 @@ class FriendListUsecase implements FriendUsecaseInterface
 
     public function dellFriend($data)
     {
-        // TODO: Implement dellFriend() method.
+
+        $this->friend->unconnectFriend($data);
+        return ApiResponse::successResponse([],'Disconected Friend',200);
+    }
+
+    public function AcceptRequest($data)
+    {
+        $this->friend->AcceptFriendRequest($data);
+        return ApiResponse::successResponse([],"Accepted Reqeuest Success",200);
     }
 }

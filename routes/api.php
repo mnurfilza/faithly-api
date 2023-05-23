@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\Api\Authentication;
+use App\Http\Controllers\Api\BooksController;
 use App\Http\Controllers\Api\CardController;
+use App\Http\Controllers\Api\ChapterController;
 use App\Http\Controllers\Api\FriendController;
+use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\SubscriptionController;
-
+use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\User;
+use App\Http\Controllers\Api\VersesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,14 +28,30 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::post('/register', [Authentication::class, 'store']);
     Route::post('/login', [Authentication::class, 'login']);
+    Route::post('/login-child', [Authentication::class, 'LoginChild']);
     Route::post('/forgot-password', [Authentication::class, 'ForgotPassword']);
     Route::post('/confirm-password', [Authentication::class, 'confirmPassword']);
     Route::post('/card', [CardController::class, 'CardRegist']);
     Route::post('/resend-link', [Authentication::class, 'ResendLink']);
-    Route::post('/activate',[Authentication::class, 'VerifiedEmail']);
-    Route::controller(SubscriptionController::class)->group(function (){
-        Route::get('/subscription','listSubs');
+    Route::post('/resend-link-forgot-pass', [Authentication::class, 'ResendForgotPasswordLink']);
+
+    Route::post('/activate', [Authentication::class, 'VerifiedEmail']);
+
+    Route::controller(SubscriptionController::class)->group(function () {
+        Route::get('/subscription', 'listSubs');
     });
+
+    Route::get('/how-to-play', [\App\Http\Controllers\Api\HowToPlayController::class, 'getHowToPlay']);
+    Route::get('/faq',[\App\Http\Controllers\Api\FaqController::class,'getFaq']);
+
+    Route::get('/old-testament', [BooksController::class, 'getOldTestament']);
+    Route::get('/new-testament', [BooksController::class, 'getNewTestament']);
+    Route::get('/chapters', [ChapterController::class, 'getChapters']);
+    Route::get('/verses', [VersesController::class, 'getVerses']);
+    Route::get('/topic/{topic_id}', [TopicController::class, 'getVerseByTopic']);
+    Route::get('/topics', [TopicController::class, 'getTopics']);
+    Route::get('/level/{chapter_id}', [LevelController::class, 'getLevelChapter']);
+
 
 
     Route::middleware('jwt.api')->group(function () {
@@ -42,11 +63,25 @@ Route::prefix('v1')->group(function () {
         Route::controller(User::class)->group(function () {
             Route::get('/user', 'listUser');
             Route::get('/user/{id}', 'getProfileUser');
+            Route::get('/list-child', 'ListChild');
+            Route::get('/list-donation', 'ListChild');
+            Route::post('/add-organization-member', 'addOrganizationMember');
+            Route::post('/add-childern', 'addChildern');
+
         });
 
         Route::controller(FriendController::class)->group(function () {
             Route::post('/friend', 'AddFriend');
             Route::get('/friend', 'ListFriend');
+            Route::put('/accept-friend', 'acceptedRequest');
+            Route::delete('/delete-friend', 'dellFriend');
+
+        });
+
+        Route::controller(GroupController::class)->group(function(){
+            Route::post('/group', 'createGroup');
+            Route::get('/group','listGroup');
+
         });
 
     });

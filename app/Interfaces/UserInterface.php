@@ -2,7 +2,7 @@
 namespace App\Interfaces;
 
 interface UserInterface{
-    public function storeUser($data,$activationToken);
+    public function storeUser($data,$activationToken,$status);
     public function checkEmail($email): bool;
     public function getuserByEmail($email);
 
@@ -20,6 +20,12 @@ interface UserInterface{
 
     public  function  getLisChild($data);
     public  function getListAdmin($data);
+
+    public function checkPrefix($data);
+
+    public function updateTokenRegistration($data);
+
+
 
 
 

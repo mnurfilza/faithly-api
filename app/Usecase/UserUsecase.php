@@ -106,7 +106,8 @@ class UserUsecase implements UserUsecaseInterface
             'page' => $data['page'] ?? 1,
             'search' => $data['search'] ?? '',
             'sort_by' => $data['sort_by'] ?? 'asc',
-            'order_by' => $data['order_by'] ?? 'fullname'
+            'order_by' => $data['order_by'] ?? 'fullname',
+            'parent_id' => $data['parent_id'] ?? ''
         ]);
 
 
@@ -140,7 +141,7 @@ class UserUsecase implements UserUsecaseInterface
         }
 
         //save to user
-        $user = $this->userInterface->storeUser($data, $token);
+        $user = $this->userInterface->storeUser($data, $token, 1);
 
         //save to user detail
 
@@ -150,21 +151,25 @@ class UserUsecase implements UserUsecaseInterface
             'phone_number' => $data['phone_number'] ?? "",
             'role_id' => $role->id,
             'parent_id' => 0,
-            'org_id' => 0,
+            'org_id' => $data['organization_id']??0,
             'year_of_birth' => $data['year_of_birth'] ?? "",
             'subs_id' => $data['subs_id'] ?? 0,
 
         ];
 
         $detailResp = $this->eloqUserDetail->Store($userDetail);
+        $link = env('BASE_URL') . '/activate?token=' . $token;
+        if ($data['platform'] == 'mobile') {
+            $link = 'myapp://success-verification?token=' . $token;
 
+        }
         $mailData = [
             'title' => 'Verification Email',
             'body' => env('BASE_URL') . '/activate?token=' . $token
         ];
 
         //send to email link forgot password
-        $mail = Mail::to($data['email'])->send(new SendEmail($mailData, "Verification Email"));
+        $mail = Mail::to($data['admin_email'])->send(new SendEmail($mailData, "Verification Email"));
 
         if ($mail instanceof \Illuminate\Mail\SentMessage) {
             //email sent success
@@ -181,11 +186,128 @@ class UserUsecase implements UserUsecaseInterface
 
     public function addChild($data)
     {
-        // TODO: Implement addChild() method.
+        $isEmailExist = $this->userInterface->checkEmail($data['email']);
+
+        if ($isEmailExist) {
+            return ApiResponse::errorResponse("Email Already Exist", '', 409);
+        }
+
+        $token = Str::random(64);
+
+
+        //get role by name
+        $role = $this->roleEloq->getRoleByName('Childern');
+        if ($role == null) {
+            return ApiResponse::errorResponse('Role' . ' ' . 'Admin' . ' ' . "Doesn't Exists", '', 404);
+        }
+        $randomNumber = rand(1, 999999);
+        $sixDigitNumber = str_pad($randomNumber, 6, '0', STR_PAD_LEFT);
+        $suffix = Str::random(3);
+        $data['username']= $data['prefix'].$suffix;
+        $data['password'] = $sixDigitNumber;
+        //save to user
+        $user = $this->userInterface->storeUser($data, $token,2);
+
+        //save to user detail
+
+        $userDetail = [
+            'user_id' => $user->id,
+            'fullname' => $data['fullname'] ?? "",
+            'phone_number' => $data['phone_number'] ?? "",
+            'role_id' => $role->id,
+            'parent_id' => $data['parent_id']??0,
+            'org_id' => 0,
+            'year_of_birth' => $data['year_of_birth'] ?? "",
+            'subs_id' => $data['subs_id'] ?? 0,
+
+        ];
+
+        $detailResp = $this->eloqUserDetail->Store($userDetail);
+
+        $mailData = [
+            'title' => 'Verification Email',
+            'body' => 'password :'. $sixDigitNumber
+        ];
+
+        //send to email link forgot password
+        $mail = Mail::to($data['parent_email'])->send(new SendEmail($mailData, "Verification Email"));
+
+        if ($mail instanceof \Illuminate\Mail\SentMessage) {
+            //email sent success
+            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $data['email']], "Link Alredy Send to " . ' ' . $data['email']);
+        }
+
+
+        return ApiResponse::successResponse([
+            'subs_id' => $detailResp->subs_id,
+            'user_detail_id' => $detailResp->id,
+            'org_id' => $detailResp->org_id,
+        ], "Success Register", 200);
     }
 
     public function addOrganizationMember($data)
     {
-        // TODO: Implement addOrganizationMember() method.
+
+        $isPrefixExist = $this->userInterface->checkPrefix($data['prefix']);
+        if ($isPrefixExist) {
+            return ApiResponse::errorResponse("Prefix Already Exist", '', 409);
+        }
+        $isEmailExist = $this->userInterface->checkEmail($data['email']);
+
+        if ($isEmailExist) {
+            return ApiResponse::errorResponse("Email Already Exist", '', 409);
+        }
+
+        $token = Str::random(64);
+        $suffix = Str::random(3);
+        $password = Str::random(6);
+
+
+        //get role by name
+        $role = $this->roleEloq->getRoleByName('Organization Member');
+        if ($role == null) {
+            return ApiResponse::errorResponse('Role' . ' ' . 'Admin' . ' ' . "Doesn't Exists", '', 404);
+        }
+
+        $data['username']= $data['prefix'].$suffix;
+        $data['password'] = $password;
+        //save to user
+        $user = $this->userInterface->storeUser($data, $token,2);
+
+        //save to user detail
+
+        $userDetail = [
+            'user_id' => $user->id,
+            'phone_number' => $data['phone_number'] ?? "",
+            'role_id' => $role->id,
+            'parent_id' => 0,
+            'fullname' => $data['fullname'] ?? "",
+            'org_id' => $data['organization_id']??0,
+            'year_of_birth' => $data['year_of_birth'] ?? "",
+            'subs_id' => $data['subs_id'] ?? 0,
+
+        ];
+
+        $detailResp = $this->eloqUserDetail->Store($userDetail);
+
+        $mailData = [
+            'title' => 'Verification Email',
+            'body' => 'password :'. $password,
+        ];
+
+        //send to email link forgot password
+        $mail = Mail::to($data['email'])->send(new SendEmail($mailData, "Verification Email"));
+
+        if ($mail instanceof \Illuminate\Mail\SentMessage) {
+            //email sent success
+            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $data['email']], "Link Alredy Send to " . ' ' . $data['email']);
+        }
+
+
+        return ApiResponse::successResponse([
+            'subs_id' => $detailResp->subs_id,
+            'user_detail_id' => $detailResp->id,
+            'org_id' => $detailResp->org_id,
+        ], "Success Register", 200);
     }
 }

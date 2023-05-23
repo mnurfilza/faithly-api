@@ -8,4 +8,6 @@ interface FriendUsecaseInterface
     public function listFriend($data);
 
     public function dellFriend($data);
+
+    public function AcceptRequest($data);
 }

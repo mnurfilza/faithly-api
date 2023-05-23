@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 
 interface GroupUsecaseInterface
 {
-    public function createGroup(Request $request);
-    public function listGroup(Request $request);
-
-    public function inviteUser(Request $request);
-    public function deleteUserFromGroup(Request $request);
+    public function createGroup($data);
+    public function listGroup($data);
+    public function detailGroup($data);
+    public function inviteUser($data);
+    public function deleteUserFromGroup($data);
+    public function acceptInvitation($data);
 
 }

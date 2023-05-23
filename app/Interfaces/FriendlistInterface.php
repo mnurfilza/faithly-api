@@ -11,4 +11,7 @@ interface FriendlistInterface
 
     public function unconnectFriend($data);
 
+
+    public function AcceptFriendRequest($data);
+
 }

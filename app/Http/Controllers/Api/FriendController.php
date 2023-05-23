@@ -18,7 +18,6 @@ class FriendController extends Controller
     }
 
 
-
     /**
      * @OA\Post(
      *     path="/friend",
@@ -232,6 +231,17 @@ class FriendController extends Controller
      *          description="sort_by",
      *          required=false,
      *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *
+     *     ),
+     *      @OA\Parameter(
+     *          name="is_request",
+     *          description="is_request",
+     *          required=false,
+     *          in="query",
+     *          example="1",
      *          @OA\Schema(
      *              type="string"
      *          )
@@ -498,6 +508,7 @@ class FriendController extends Controller
                 'search' => $request->query('search'),
                 'sort_by' => $request->query('sort_by'),
                 'order_by' => $request->query('order_by'),
+                'isRequest' => $request->query('is_request') ?? '0'
 
             ]);
         } catch (\Throwable $th) {
@@ -505,5 +516,316 @@ class FriendController extends Controller
 
         }
         return $resp;
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/friend/{friend_id}",
+     *     tags={"friendlist"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *    @OA\Parameter(
+     *         name="Authentication",
+     *         description="Provides user authentication bearer token",
+     *         in="header",
+     *         required=true
+     *     ),
+     *     @OA\Parameter(
+     *         name="friend_id",
+     *         description="Provides user authentication bearer token",
+     *         in="path",
+     *         required=true
+     *     ),
+     *
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Success Request Friend"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                    @OA\Property (
+     *                         property="request_to",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *
+     *
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Email Not found",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Email Not Found"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+    public function acceptedRequest(Request $request)
+    {
+        try {
+            $messages = [
+                'required' => ':attribute cannot be empty',
+                'max' => ':attribute Max :max character',
+                'min' => ':attribute Min :min character'
+            ];
+
+            $request->validate([
+                'friend_id' => 'required',
+
+            ], $messages);
+
+            $res = $this->friendUsecase->AcceptRequest(['friend_id'=>$request['friend_id']]);
+
+        }catch (\Throwable $th)
+        {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+
+        return $res;
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/friend/{friend_id}",
+     *     tags={"friendlist"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *    @OA\Parameter(
+     *         name="Authentication",
+     *         description="Provides user authentication bearer token",
+     *         in="header",
+     *         required=true
+     *     ),
+     *     @OA\Parameter(
+     *         name="friend_id",
+     *         description="Provides user authentication bearer token",
+     *         in="path",
+     *         required=true
+     *     ),
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Success Disconnected Friend"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                    @OA\Property (
+     *                         property="request_to",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *
+     *
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Email Not found",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Email Not Found"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+    public function disconnectFriend(Request $request)
+    {
+        try {
+
+            $res = $this->friendUsecase->AcceptRequest(['friend_id'=>$request->query('friend_id')]);
+
+        }catch (\Throwable $th)
+        {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+
+        return $res;
     }
 }

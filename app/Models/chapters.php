@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class chapters extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'book_id',
+        'order',
+
+    ];
+    protected $table = 'chapters';
+
+    protected $guarded = [];
 }

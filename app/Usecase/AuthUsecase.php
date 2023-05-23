@@ -10,7 +10,7 @@ use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\UserDetailRepoInterface;
 use App\Interfaces\UserInterface;
 use App\Mail\SendEmail;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -44,10 +44,12 @@ class AuthUsecase implements AuthUsecaseInterface
 
     public function Register(Request $request, $platform)
     {
-        $isEmailExist = $this->eloquentUser->checkEmail($request->email);
+        $minutes = 5;
+        $seconds = $minutes * 60;
+        $isEmailExist = $this->eloquentUser->checkEmail(["email"=> $request->email, "username"=> $request->username]);
 
         if ($isEmailExist) {
-            return ApiResponse::errorResponse("Email Already Exist", '', 409);
+            return ApiResponse::errorResponse("Email or Username Already Exist", '', 409);
         }
 
         $token = Str::random(64);
@@ -60,7 +62,7 @@ class AuthUsecase implements AuthUsecaseInterface
         }
 
         //save to user
-        $user = $this->eloquentUser->storeUser($request, $token);
+        $user = $this->eloquentUser->storeUser($request, $token, 1);
 
         //save to user detail
 
@@ -77,9 +79,9 @@ class AuthUsecase implements AuthUsecaseInterface
         ];
 
         $detailResp = $this->eloqUserDetail->Store($userDetail);
-        $link = env('BASE_URL').'/activate?token=' . $token;
+        $link = env('BASE_URL') . '/activate?token=' . $token;
         if ($platform == 'mobile') {
-            $link = 'myapp:///success-verification?token=' . $token;
+            $link = 'myapp://success-verification?token=' . $token;
 
         }
 
@@ -90,16 +92,17 @@ class AuthUsecase implements AuthUsecaseInterface
 
         //send to email link forgot password
         $mail = Mail::to($request['email'])->send(new SendEmail($mailData, "Verification Email"));
-        if ($mail instanceof \Illuminate\Mail\SentMessage) {
+        if (!$mail instanceof \Illuminate\Mail\SentMessage) {
             //email sent success
-            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $request['email']], "Link Alredy Send to " . ' ' . $request['email']);
+            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $request['email']], "Failed Send to " . ' ' . $request['email']);
         }
 
-
+       
         return ApiResponse::successResponse([
             'subs_id' => $detailResp->subs_id,
             'user_detail_id' => $detailResp->id,
             'org_id' => $detailResp->org_id,
+            'timer'=> $seconds
         ], "Success Register", 200);
     }
 
@@ -163,7 +166,7 @@ class AuthUsecase implements AuthUsecaseInterface
 
     }
 
-    public function ForgotPassword(Request $request)
+    public function ForgotPassword(Request $request,$platform)
     {
         $email = $this->eloquentUser->getuserByEmail($request['email']);
         if ($email == null) {
@@ -178,10 +181,14 @@ class AuthUsecase implements AuthUsecaseInterface
             'isUsed' => false,
             'created_at' => Carbon::now(),
         ]);
+        $link = env('BASE_URL') . '/change-pass?token=' . $token;
+        if ($platform == 'mobile') {
+            $link = 'myapp://change-pass?token=' . $token;
 
+        }
         $mailData = [
-            'title' => 'Forgot Password', '
-            body' => env('BASE_URL') . $token
+            'title' => 'Forgot Password', 
+            'body' => $link,
         ];
 
         //send to email link forgot password
@@ -196,30 +203,43 @@ class AuthUsecase implements AuthUsecaseInterface
 
     }
 
-    public function ResendLinkVerificationEmail(Request $request)
+    public function ResendLinkVerificationEmail(Request $request,$platform)
     {
         $email = $this->eloquentUser->getuserByEmail($request['email']);
         if ($email == null) {
             return ApiResponse::errorResponse("Email Not Found", '', 404);
         }
+
+        if($email->activation_token_used == true)
+        {
+            return ApiResponse::errorResponse("Activation Token Already Used", '', 400);
+
+        }
+
+        if($email->status == "Active")
+        {
+            return ApiResponse::errorResponse("User Already Activate Account", '', 400);
+
+        }
         $token = Str::random(64);
 
-        // save to password token
-        $re = $this->forgotPassw->storeData([
-            'email' => $request['email'],
-            'token' => $token,
-            'isUsed' => false,
-            'created_at' => Carbon::now(),
-        ]);
+        $this->eloquentUser->updateTokenRegistration(['email'=> $request['email'],'token'=> $token]);
+
+
+        $link = env('BASE_URL') . '/activate?token=' . $token;
+        if ($platform == 'mobile') {
+            $link = 'myapp://success-verification?token=' . $token;
+
+        }
 
         $mailData = [
-            'title' => 'Forgot Password', '
-            body' => ''
+            'title' => 'Verification Email',
+            'body' => $link
         ];
 
 
         //send to email link forgot password
-        $mail = Mail::to($email['email'])->send(new SendEmail($mailData, "Test Email"));
+        $mail = Mail::to($email['email'])->send(new SendEmail($mailData, "Verification Email"));
 
         if ($mail instanceof \Illuminate\Mail\SentMessage) {
             //email sent success
@@ -245,15 +265,18 @@ class AuthUsecase implements AuthUsecaseInterface
         if ($request->query('token') == "") {
             return ApiResponse::errorResponse('Token Cannot Be Empty', '', 400);
         }
-
+        
         $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
+        if ($token == null) {
+            return ApiResponse::errorResponse('', 'Unknown Token', 400);
+        }
         $created_date = new Carbon($token['created_at']);
         $current_date = Carbon::now();
 
         $duration = $current_date->diffInMinutes($created_date);
 
         //put duration on env file, so in the future will be easy to adjust
-        if ($duration >= 5) {
+        if ($duration >= 8) {
             return ApiResponse::errorResponse("Token Expired", '', 401);
         }
 
@@ -265,6 +288,77 @@ class AuthUsecase implements AuthUsecaseInterface
 
         $this->eloquentUser->verifiedUser($token->id);
         return ApiResponse::successResponse('', 'Success Verified Email', 200);
+    }
+
+    public function LoginChild($request)
+    {
+        $res = $this->eloqUserDetail->checkUserByYear($request['year']);
+        if ($res === null) {
+            return ApiResponse::errorResponse("User Undefined", '', 404);
+        }
+
+        if ($res->status !== 'Active') {
+
+            return ApiResponse::errorResponse("User Not Active", '', 403);
+        }
+
+        if ($res->role !== 'Childern')
+        {
+            return ApiResponse::errorResponse("User Not Allowed", '', 403);
+        }
+        if ($token = JWTAuth::attempt(['username' => $res['username'], 'password' => $request['password']])) {
+            return $this->respondWithToken($token, $res->role);
+        }
+        return ApiResponse::errorResponse("Username or Password Invalid", '', 401);
+
+    }
+
+    public function ResendForgotPasswordLink($data)
+    {
+        $email = $this->eloquentUser->getuserByEmail($data['email']);
+        if ($email == null) {
+            return ApiResponse::errorResponse("Email Not Found", '', 404);
+        }
+
+        if($email->activation_token_used == true)
+        {
+            return ApiResponse::errorResponse("Activation Token Already Used", '', 400);
+
+        }
+
+        if($email->status == "Active")
+        {
+            return ApiResponse::errorResponse("User Already Activate Account", '', 400);
+
+        }
+        $token = Str::random(64);
+         // save to password token
+        $re = $this->forgotPassw->storeData([
+            'email' => $data['email'],
+            'token' => $token,
+            'isUsed' => false,
+            'created_at' => Carbon::now(),
+        ]);
+
+        $link = env('BASE_URL') . '/change-pass?token=' . $token;
+        if ($data['platform'] == 'mobile') {
+            $link = 'myapp://change-pass?token=' . $token;
+
+        }
+        $mailData = [
+            'title' => 'Forgot Password', '
+            body' => $link,
+        ];
+
+        //send to email link forgot password
+        $mail = Mail::to($email['email'])->send(new SendEmail($mailData, "Test Email"));
+
+        if ($mail instanceof \Illuminate\Mail\SentMessage) {
+            //email sent success
+            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $email->email], "Link Alredy Send to " . ' ' . $email->email);
+        }
+
+        return ApiResponse::errorResponse('Failed To Request Forgot Password', '', 500);
     }
 }
 

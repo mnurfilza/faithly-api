@@ -29,11 +29,15 @@ class FriendRepository implements FriendlistInterface
             ->query()
             ->join('users', 'users.id', '=', 'friend.friend_id')
             ->join('user_detail', 'user_detail.user_id', '=', 'users.id')
-            ->join('statuses', 'friend.status_id', '=', 'statuses.id')
+            ->join('statuses', 'users.status_id', '=', 'statuses.id')
             ->join('role', 'user_detail.role_id', '=', 'role.id')
-//            ->where('statuses.name', '=', 'active')
+            ->where('statuses.name', '=', 'Active')
             ->where('friend.user_id', '=', $data['user_id']);
 
+        if ($data['isRequest'] === "1") {
+            $query->join('statuses', 'friend.status_id', '=', 'statuses.id')
+                ->where('statuses.name', '=', 'Request');
+        }
         if ($data['search'] !== "") {
             $query
                 ->whereRaw("user_detail.fullname LIKE '%" . $data['search'] . "%' OR phone_number LIKE `%" . $data['search'] . "%'");
@@ -60,6 +64,18 @@ class FriendRepository implements FriendlistInterface
 
     public function unconnectFriend($data)
     {
-        // TODO: Implement unconnectFriend() method.
+        return $this->friend
+            ->query()
+            ->where('friend_id', '=', $data['friend_id'])
+            ->delete();
+    }
+
+
+    public function AcceptFriendRequest($data)
+    {
+        return $this->friend
+            ->query()
+            ->where('friend_id', '=', $data['friend_id'])
+            ->update(['status_id' => 10]);
     }
 }

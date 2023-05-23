@@ -19,25 +19,29 @@ class UserRepository implements UserInterface
         $this->userModel = $user;
     }
 
-    public function storeUser($data, $activationToken)
+    public function storeUser($data, $activationToken, $status)
     {
         return $this->userModel->create([
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'status_id' => 1,
+            'status_id' => $status,
             'activation_token' => $activationToken,
         ]);
     }
 
 
-    public function checkEmail($email): bool
+    public function checkEmail($data): bool
     {
-        if ($this->userModel->where('email', '=', $email)->count() > 0) {
+        if ($this->userModel->where('email', '=', $data['email'])
+        ->orWhere('username','=',$data['username'])
+        ->count() > 0) {
             return true;
         }
         return false;
     }
+
+
 
     public function getuserByEmail($email)
     {
@@ -57,7 +61,7 @@ class UserRepository implements UserInterface
 
 
         if ($data['user_id'] !== 0) {
-            $query->whereNot('user.id', '=', $data['user_id']);
+            $query->whereNot('users.id', '=', $data['user_id']);
         }
         if($data['isAdminSide'] ===true){
             $query->whereNot('role.name', '=','Super Admin')->whereNot('role.name','=','Admin');
@@ -139,7 +143,7 @@ class UserRepository implements UserInterface
 
     public function verifiedUser($data)
     {
-        return $this->userModel->where('id', $data)->update(['email_verified_at' => Carbon::now(), 'status_id' => 3]);
+        return $this->userModel->where('id', $data)->update(['email_verified_at' => Carbon::now(), 'status_id' => 2]);
     }
 
     public function getLisChild($data)
@@ -150,6 +154,10 @@ class UserRepository implements UserInterface
             ->join('role', 'user_detail.role_id', '=', 'role.id')
             ->join('statuses', 'users.status_id', '=', 'statuses.id')
             ->where('role.name','=','Child');
+
+        if ($data['parent_id'] !== ""){
+            $query = $query->orWhere('user_detail.parent_id','=');
+        }
 
         if ($data['search'] !== "") {
             $query
@@ -201,6 +209,24 @@ class UserRepository implements UserInterface
             'total' => $total,
         ];
 
+    }
+
+    public function checkPrefix($data)
+    {
+        if ($this->userModel->where('username', 'LIKE', $data.'%')
+        ->count() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function updateTokenRegistration($data)
+    {
+
+        return $this->userModel->query()
+        ->where('email','=',$data['email'])
+        ->update(['activation_token'=> $data['token']]);
     }
 
 }

@@ -22,7 +22,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/registration",
+     *     path="/register",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -346,6 +346,15 @@ class Authentication extends Controller
      *                          example=""
      *                           ),
      *
+     *                       ),
+     *                        @OA\Property (
+     *                          property="role",
+     *                          type="string",
+     *                          description="",
+     *                          nullable=false,
+     *                          example=""
+     *                           ),
+     *
      *                       )
      *                 )
      *
@@ -608,7 +617,7 @@ class Authentication extends Controller
                 'email' => 'required',
 
             ], $messages);
-            $re = $this->user->ForgotPassword($request);
+            $re = $this->user->ForgotPassword($request,'mobile');
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
 
@@ -968,7 +977,7 @@ class Authentication extends Controller
                 'email' => 'required',
 
             ], $messages);
-            $re = $this->user->ResendLinkVerificationEmail($request);
+            $re = $this->user->ResendLinkVerificationEmail($request,'mobile');
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
 
@@ -980,7 +989,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/activate``",
+     *     path="/activate",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -1159,6 +1168,8 @@ class Authentication extends Controller
         try {
             $resp = $this->user->VerifiedEmail($request);
         } catch (\Throwable $th) {
+            print_r($th);
+            die();
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
 
         }
@@ -1166,5 +1177,352 @@ class Authentication extends Controller
 
     }
 
+
+    /**
+     * @OA\Post(
+     *     path="/login-child",
+     *     tags={"Authentication"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *    @OA\RequestBody(
+     *        @OA\JsonContent(
+     *    @OA\Property(
+     *        property="year",
+     *        type="string",
+     *        description="",
+     *        nullable=false,
+     *    ),
+     *
+     *    @OA\Property(
+     *        property="password",
+     *        type="string",
+     *        description="",
+     *        nullable=false,
+     *         ),
+     *       )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Success Login"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                    @OA\Property (
+     *                         property="token",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *                      @OA\Property (
+     *                          property="token_type",
+     *                          type="string",
+     *                          description="",
+     *                          nullable=false,
+     *                          example=""
+     *                           ),
+     *                      @OA\Property (
+     *                          property="role",
+     *                          type="string",
+     *                          description="",
+     *                          nullable=false,
+     *                          example=""
+     *                           ),
+     *
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Username or Password Invalid",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Username or Password Invalid"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+    public function LoginChild(Request $request)
+    {
+
+        try {
+            $messages = [
+                'required' => ':attribute cannot be empty',
+                'max' => ':attribute Max :max character',
+                'min' => ':attribute Min :min character'
+            ];
+
+            $request->validate([
+                'year' => 'required',
+                'password' => 'required',
+
+            ], $messages);
+            $resp = $this->user->LoginChild(['year' => $request->year, 'password' => $request->password]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+        return $resp;
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/resend-link-forgot-pass",
+     *     tags={"Authentication"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *    @OA\RequestBody(
+     *        @OA\JsonContent(
+     *    @OA\Property(
+     *        property="email",
+     *        type="string",
+     *        description="",
+     *        nullable=false,
+     *    )
+     *       )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Link Alredy Send to {email}"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                    @OA\Property (
+     *                         property="subject",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *                      @OA\Property (
+     *                          property="to",
+     *                          type="string",
+     *                          description="",
+     *                          nullable=false,
+     *                          example=""
+     *                           ),
+     *                       @OA\Property (
+     *                          property="from",
+     *                          type="string",
+     *                          description="",
+     *                          nullable=false,
+     *                          example=""
+     *                           ),
+     *
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Email Not found",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Email Not Found"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+
+
+    public function ResendForgotPasswordLink(Request $request)
+    {
+        try {
+            $messages = [
+                'required' => ':attribute cannot be empty',
+                'max' => ':attribute Max :max character',
+                'min' => ':attribute Min :min character'
+            ];
+
+            $request->validate([
+
+                'email' => 'required',
+
+            ], $messages);
+            $re = $this->user->ResendForgotPasswordLink(['email'=>$request->email, 'platform'=>'mobile']);
+        } catch (\Throwable $th) {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+
+    }
 
 }
