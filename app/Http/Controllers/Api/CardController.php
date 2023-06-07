@@ -18,7 +18,7 @@ class CardController extends Controller
     }
     /**
      * @OA\Post(
-     *     path="/card",
+     *     path="/api/v1/card",
      *     tags={"card"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -194,7 +194,7 @@ class CardController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/card",
+     *     path="/api/v1/card",
      *     tags={"card"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -511,7 +511,7 @@ class CardController extends Controller
     }
     /**
      * @OA\Get(
-     *     path="/card/{id}",
+     *     path="/api/v1/card/{id}",
      *     tags={"card"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

@@ -10,19 +10,20 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://localhost:8000",
             "description": "Demo API Server"
         }
     ],
     "paths": {
-        "/register": {
+        "/api/v1": {},
+        "/api/v1/register": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "2d2b7cf03c1a096abfe4791c5592f452",
+                "operationId": "f844902280b8a066f3b6cde54bc5685a",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -253,14 +254,14 @@
                 }
             }
         },
-        "/login": {
+        "/api/v1/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "cc1f51ea64eae1fe90a7487728ababc5",
+                "operationId": "07801d9b2ed6af652be1edee6741f468",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -342,14 +343,14 @@
                 }
             }
         },
-        "/forgot-password": {
+        "/api/v1/forgot-password": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "65301c71771f764f443fe50e5716bc18",
+                "operationId": "ea5e203f26a8c8ce40b998f406ac1a17",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -500,14 +501,14 @@
                 }
             }
         },
-        "/confirm-password": {
+        "/api/v1/confirm-password": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "6df899c851e57da3422abd80b2f7549e",
+                "operationId": "4c2f022766477aff92450e37f84eb018",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -692,14 +693,14 @@
                 }
             }
         },
-        "/resend-link": {
+        "/api/v1/resend-link": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "e1938dc64b6845c33317c24d167b99d6",
+                "operationId": "ef27be0da9f53638bc171b7c220e3c5f",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -850,14 +851,14 @@
                 }
             }
         },
-        "/activate": {
+        "/api/v1/activate": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "d2ccfef530a4b164e25bc7a4bfe120a4",
+                "operationId": "37ab57c6907169f9de65e938ad963d1a",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -1032,14 +1033,14 @@
                 }
             }
         },
-        "/login-child": {
+        "/api/v1/login-child": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "5113dcf1c6dd923669c0bef8ccaf0257",
+                "operationId": "9fd26d5d1da40e7a9ef6d9310f52de36",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1195,14 +1196,14 @@
                 }
             }
         },
-        "/resend-link-forgot-pass": {
+        "/api/v1/resend-link-forgot-pass": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "14298455c97c266328d66c7d45ac82de",
+                "operationId": "fead6d7a8ed2e1bc6ab61cad641f77e1",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1353,7 +1354,7 @@
                 }
             }
         },
-        "/old-testament": {
+        "/api/v1/old-testament": {
             "get": {
                 "tags": [
                     "books"
@@ -1594,7 +1595,7 @@
                 }
             }
         },
-        "/new-testament": {
+        "/api/v1/new-testament": {
             "get": {
                 "tags": [
                     "books"
@@ -1835,7 +1836,7 @@
                 }
             }
         },
-        "/card": {
+        "/api/v1/card": {
             "get": {
                 "tags": [
                     "card"
@@ -2139,7 +2140,7 @@
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "93bbac2d068863d067ba37481a10e6df",
+                "operationId": "abbade870e5d736b92addd9d1e852530",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2294,14 +2295,14 @@
                 }
             }
         },
-        "/card/{id}": {
+        "/api/v1/card/{id}": {
             "get": {
                 "tags": [
                     "card"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "5ad5612b8bd76f932aadbc1b1e4245b2",
+                "operationId": "2511914551c686a165877f6eccb9248a",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -2433,7 +2434,7 @@
                 }
             }
         },
-        "/chapters": {
+        "/api/v1/chapters": {
             "get": {
                 "tags": [
                     "chapter"
@@ -2638,14 +2639,14 @@
                 }
             }
         },
-        "/faq": {
+        "/api/v1/faq": {
             "get": {
                 "tags": [
                     "information"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "e0c2eb54baa46289350afcd879366ed3",
+                "operationId": "7430e4e4b560614dfd5ed5ffe545c9b5",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -2832,7 +2833,7 @@
                 }
             }
         },
-        "/friend": {
+        "/api/v1/friend": {
             "get": {
                 "tags": [
                     "friendlist"
@@ -3146,7 +3147,7 @@
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "a487bc5e76e58b019062b52094cf7baa",
+                "operationId": "212af046771a7c14e9e8c655dfded003",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -3293,14 +3294,14 @@
                 }
             }
         },
-        "/friend/{friend_id}": {
+        "/api/v1/friend/{friend_id}": {
             "put": {
                 "tags": [
                     "friendlist"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "b9a71b29fbf47fffec8daa3a26086d69",
+                "operationId": "1db1ae90163f51480fd840fa39f5515f",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -3442,7 +3443,7 @@
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "ce3b2d3833b249e1c070bd887428bdb2",
+                "operationId": "64b06740aaab62b6904511a080f8b6cc",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -3579,7 +3580,7 @@
                 }
             }
         },
-        "/group": {
+        "/api/v1/group": {
             "get": {
                 "tags": [
                     "group"
@@ -3905,7 +3906,7 @@
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "a9c76a3710c07938a86323c374b89d31",
+                "operationId": "e486fd1363ea7d0a5dd92c66d9a96bbb",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -4136,14 +4137,14 @@
                 }
             }
         },
-        "/group/invite": {
+        "/api/v1/group/invite": {
             "post": {
                 "tags": [
                     "group"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "a2f456d26a0083a041fa1bbd171f86e6",
+                "operationId": "1f5e858062c90d6dc54ac2dbed761244",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -4374,14 +4375,14 @@
                 }
             }
         },
-        "/group/accept-invitation": {
+        "/api/v1/group/accept-invitation": {
             "post": {
                 "tags": [
                     "group"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "902955d689dd526e2f7fe6476b1b1e17",
+                "operationId": "04306145469cc311f42b554aadaace72",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -4612,7 +4613,7 @@
                 }
             }
         },
-        "/how-to-play": {
+        "/api/v1/how-to-play": {
             "get": {
                 "tags": [
                     "information"
@@ -4801,7 +4802,7 @@
                 }
             }
         },
-        "/level/{chapter_id}": {
+        "/api/v1/level/{chapter_id}": {
             "get": {
                 "tags": [
                     "level"
@@ -5063,7 +5064,191 @@
                 }
             }
         },
-        "/subscription": {
+        "/api/v1/init-payment": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "61e2a520a2946de97ad86d00cb9361f4",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "card": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "disc": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "nullable": false
+                                    },
+                                    "amount": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "nullable": false
+                                    },
+                                    "user_detail_id": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "is_renewal": {
+                                        "description": "",
+                                        "type": "boolean",
+                                        "nullable": false
+                                    },
+                                    "next_payment_date": {
+                                        "description": "",
+                                        "type": "string",
+                                        "format": "date",
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success Create Payment",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Link Alredy Send to {email}",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "properties": {
+                                                "subject": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "to": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "from": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Email Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Email Not Found",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/subscription": {
             "get": {
                 "tags": [
                     "subscription"
@@ -5389,7 +5574,7 @@
                 }
             }
         },
-        "/topics": {
+        "/api/v1/topics": {
             "get": {
                 "tags": [
                     "topics"
@@ -5610,7 +5795,7 @@
                 }
             }
         },
-        "/topic/{topic_id}": {
+        "/api/v1/topic/{topic_id}": {
             "get": {
                 "tags": [
                     "topics"
@@ -5849,7 +6034,7 @@
                 }
             }
         },
-        "/user": {
+        "/api/v1/user": {
             "get": {
                 "tags": [
                     "user"
@@ -6195,14 +6380,14 @@
                 }
             }
         },
-        "/user/{id}": {
+        "/api/v1/user/{id}": {
             "get": {
                 "tags": [
                     "user"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "74e305c0a53a37fb5233719cd4d870ed",
+                "operationId": "5b0875da482a4924a61f03cad7955f1b",
                 "parameters": [
                     {
                         "name": "Authentication",
@@ -6334,7 +6519,7 @@
                 }
             }
         },
-        "/list-child": {
+        "/api/v1/list-child": {
             "get": {
                 "tags": [
                     "user"
@@ -6689,14 +6874,14 @@
                 }
             }
         },
-        "/add-organization-member": {
+        "/api/v1/add-organization-member": {
             "post": {
                 "tags": [
                     "user"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "a0f408b093db85adbc3164f0f5ba0d65",
+                "operationId": "0ab493d06b7864927b5d4ca39e8c4c8c",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -6910,14 +7095,14 @@
                 }
             }
         },
-        "/add-childern": {
+        "/api/v1/add-childern": {
             "post": {
                 "tags": [
                     "user"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
-                "operationId": "aa30eb901f1f7ee73f6ad82146a5e502",
+                "operationId": "f8b26585121800a80b9ab78bf8c4d2d9",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -7131,7 +7316,7 @@
                 }
             }
         },
-        "/verses": {
+        "/api/v1/verses": {
             "get": {
                 "tags": [
                     "verses"

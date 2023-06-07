@@ -5,6 +5,7 @@ namespace App\Usecase;
 use App\Helper\ApiResponse;
 use App\Interfaces\CardRepositoryInterface;
 use App\Interfaces\CardUsecaseInterface;
+use App\Interfaces\StripeInterface;
 use App\Interfaces\UserDetailRepoInterface;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,13 @@ class CardUsecase implements CardUsecaseInterface
 
 
     protected $cardRepo;
-
+    protected $stripe;
     protected $detailUser;
-    public function __construct(CardRepositoryInterface $cardRepo, UserDetailRepoInterface $detailUser)
+    public function __construct(CardRepositoryInterface $cardRepo, UserDetailRepoInterface $detailUser, StripeInterface $stripe)
     {
         $this->cardRepo = $cardRepo;
         $this->detailUser = $detailUser;
+        $this->stripe = $stripe;
 
     }
 
@@ -33,12 +35,23 @@ class CardUsecase implements CardUsecaseInterface
             return ApiResponse::errorResponse("Card Number Already Exist", '', 409);
         }
 
+
+        $exp = explode('/', $request['exp_date']);
+
+        $cp = $this->stripe->addCardToStripe([
+            'number'=>$request['card_number'],
+            'exp_month'=> $exp[0],
+            'exp_year'=> $exp[1],
+            'cvc' => $request['code_verification'],
+        ]);
+
         $cardResult = $this->cardRepo->storeCard([
             'card_number' => $request['card_number'],
             'exp_date' => $request['exp_date'],
             'code_verification' => $request['code_verification'],
             'status_id' => 2,
             'user_detail_id' => $request['user_detail_id'],
+            'stripe_payment_method_id'=> $cp['id']
         ]);
 
 

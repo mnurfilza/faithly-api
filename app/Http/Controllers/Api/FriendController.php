@@ -20,7 +20,7 @@ class FriendController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/friend",
+     *     path="/api/v1/friend",
      *     tags={"friendlist"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -183,7 +183,7 @@ class FriendController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/friend",
+     *     path="/api/v1/friend",
      *     tags={"friendlist"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -520,7 +520,7 @@ class FriendController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/friend/{friend_id}",
+     *     path="/api/v1/friend/{friend_id}",
      *     tags={"friendlist"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -681,7 +681,7 @@ class FriendController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/friend/{friend_id}",
+     *     path="/api/v1/friend/{friend_id}",
      *     tags={"friendlist"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('card_number');
             $table->string('exp_date');
             $table->string('code_verification');
+            $table->string('stripe_payment_method_id');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
             $table->timestamps();

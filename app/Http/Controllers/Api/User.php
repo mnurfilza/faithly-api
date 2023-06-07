@@ -19,7 +19,7 @@ class User extends Controller
 
     /**
      * @OA\Get(
-     *     path="/user",
+     *     path="/api/v1/user",
      *     tags={"user"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -395,7 +395,7 @@ class User extends Controller
 
     /**
      * @OA\Get(
-     *     path="/user/{id}",
+     *     path="/api/v1/user/{id}",
      *     tags={"user"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -538,7 +538,7 @@ class User extends Controller
 
     /**
      * @OA\Get(
-     *     path="/list-child",
+     *     path="/api/v1/list-child",
      *     tags={"user"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -929,7 +929,7 @@ class User extends Controller
     }
     /**
      * @OA\Post(
-     *     path="/add-organization-member",
+     *     path="/api/v1/add-organization-member",
      *     tags={"user"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -1166,7 +1166,7 @@ class User extends Controller
     }
     /**
      * @OA\Post(
-     *     path="/add-childern",
+     *     path="/api/v1/add-childern",
      *     tags={"user"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

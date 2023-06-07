@@ -18,7 +18,7 @@ class TopicController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/topics",
+     *     path="/api/v1/topics",
      *     tags={"topics"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -256,7 +256,7 @@ class TopicController extends Controller
     }
      /**
      * @OA\Get(
-     *     path="/topic/{topic_id}",
+     *     path="/api/v1/topic/{topic_id}",
      *     tags={"topics"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

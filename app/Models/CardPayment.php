@@ -60,6 +60,7 @@ class CardPayment extends Model
         'exp_date',
         'code_verification',
         'status_id',
+        'stripe_payment_method_id'
     ];
     protected $table = 'card_payment';
 

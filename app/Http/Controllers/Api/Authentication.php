@@ -22,7 +22,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/register",
+     *     path="/api/v1/register",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -257,7 +257,7 @@ class Authentication extends Controller
                 'min' => ':attribute Min :min character'
             ];
             $request->validate([
-                'username' => 'required|min:3|regex:/^[a-zA-Z]+$/',
+                'username' => 'required|min:3|regex:/^[a-zA-Z0-9]+$/',
                 'email' => 'required|email',
                 'year_of_birth' => 'required',
                 'fullname' => 'required',
@@ -266,9 +266,8 @@ class Authentication extends Controller
             ], $messages);
             $resp = $this->user->Register($request, 'mobile');
         } catch (\Throwable $th) {
-            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+            return ApiResponse::errorResponse($th->getMessage(), $th->getMessage(), 500);
         }
-
         return $resp;
     }
 
@@ -279,7 +278,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/api/v1/login",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -459,7 +458,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/forgot-password",
+     *     path="/api/v1/forgot-password",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -628,7 +627,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/confirm-password",
+     *     path="/api/v1/confirm-password",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -819,7 +818,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/resend-link",
+     *     path="/api/v1/resend-link",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -989,7 +988,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/activate",
+     *     path="/api/v1/activate",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -1180,7 +1179,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/login-child",
+     *     path="/api/v1/login-child",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -1357,7 +1356,7 @@ class Authentication extends Controller
 
     /**
      * @OA\Post(
-     *     path="/resend-link-forgot-pass",
+     *     path="/api/v1/resend-link-forgot-pass",
      *     tags={"Authentication"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -1523,6 +1522,21 @@ class Authentication extends Controller
 
         }
 
+    }
+
+
+    public function SuccesVerification(Request $request){
+        try {
+            // $userAgent = $request->header('User-Agent');
+            $token = $request->query('token');
+
+            
+            return redirect()->away('myapp://success-verification?token=' . $token);
+          
+        } catch (\Throwable $th) {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
     }
 
 }

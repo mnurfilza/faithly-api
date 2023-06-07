@@ -7,10 +7,12 @@ use App\Http\Controllers\Api\ChapterController;
 use App\Http\Controllers\Api\FriendController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\Payment;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\User;
 use App\Http\Controllers\Api\VersesController;
+use App\Http\Controllers\Web\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,8 +53,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/topic/{topic_id}', [TopicController::class, 'getVerseByTopic']);
     Route::get('/topics', [TopicController::class, 'getTopics']);
     Route::get('/level/{chapter_id}', [LevelController::class, 'getLevelChapter']);
-
-
+    Route::post('/pay', [Payment::class, 'InitialPayment']);
+    Route::get('/success-veirification-mobile', [Authentication::class, 'SuccesVerification'])->name('success-veirification-mobile');
 
     Route::middleware('jwt.api')->group(function () {
         Route::controller(CardController::class)->group(function () {

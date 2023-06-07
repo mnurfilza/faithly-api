@@ -16,6 +16,7 @@ class CardRepository implements CardRepositoryInterface
     {
 
         return $this->card->create([
+            'stripe_payment_method_id'=>$data['stripe_payment_method_id'],
             'card_number'=> $data['card_number'],
             'exp_date' => $data['exp_date'],
             'code_verification' => $data['code_verification'],

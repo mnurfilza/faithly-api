@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>{{ $mailData['title'] }}</h1>
-<a href="{{$mailData['body']}}">
+<a href="{{ route('success-veirification-mobile', ['token' => $mailData['body']]) }}">
     The Link
 </a>
 

@@ -216,7 +216,10 @@ return [
         App\Providers\FaqProvider::class,
         App\Providers\TopicProvider::class,
         App\Providers\LevelProvider::class,
-        App\Providers\GroupInterfaceProvider::class
+        App\Providers\GroupInterfaceProvider::class,
+        App\Providers\StripeProvider::class,
+        App\Providers\PaymentProvider::class
+
 
 
     ],

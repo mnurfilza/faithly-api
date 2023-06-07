@@ -21,7 +21,7 @@ class GroupController extends Controller
 
      /**
      * @OA\Post(
-     *     path="/group",
+     *     path="/api/v1/group",
      *     tags={"group"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -276,7 +276,7 @@ class GroupController extends Controller
 
 /**
      * @OA\Get(
-     *     path="/group",
+     *     path="/api/v1/group",
      *     tags={"group"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -629,7 +629,7 @@ class GroupController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/group/invite",
+     *     path="/api/v1/group/invite",
      *     tags={"group"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -877,7 +877,7 @@ class GroupController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/group/accept-invitation",
+     *     path="/api/v1/group/accept-invitation",
      *     tags={"group"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

@@ -19,7 +19,7 @@ class HowToPlayController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/how-to-play",
+     *     path="/api/v1/how-to-play",
      *     tags={"information"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

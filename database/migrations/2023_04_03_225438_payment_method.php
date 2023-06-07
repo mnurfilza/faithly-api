@@ -16,7 +16,8 @@ return new class extends Migration
         {
             $table->id();
             $table->string('provider');
-            $table->string('link');
+            $table->string('provider_code');
+            $table->boolean('is_active');
             $table->timestamps();
 
         });

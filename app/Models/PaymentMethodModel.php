@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Billing extends Model
+class PaymentMethodModel extends Model
 {
     use HasFactory;
     protected $fillable = [
         'id',
-        'user_detail_id',
-        'is_autorenewal',
-        'next_payment_date',
-        'status_id'
+        'provider',
+        'provider_code',
+        'is_active', 
     ];
-    protected $table = 'billing';
+    protected $table = 'payment_method';
 
     protected $guarded =[];
 }

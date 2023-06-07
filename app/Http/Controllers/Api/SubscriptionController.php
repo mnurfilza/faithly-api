@@ -28,7 +28,7 @@ class SubscriptionController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/subscription",
+     *     path="/api/v1/subscription",
      *     tags={"subscription"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

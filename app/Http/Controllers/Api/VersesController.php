@@ -20,7 +20,7 @@ class VersesController extends Controller
     }
 /**
      * @OA\Get(
-     *     path="/verses",
+     *     path="/api/v1/verses",
      *     tags={"verses"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

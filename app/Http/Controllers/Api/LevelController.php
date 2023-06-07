@@ -17,7 +17,7 @@ class LevelController extends Controller
 
 /**
      * @OA\Get(
-     *     path="/level/{chapter_id}",
+     *     path="/api/v1/level/{chapter_id}",
      *     tags={"level"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

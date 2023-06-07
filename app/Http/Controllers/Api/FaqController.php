@@ -19,7 +19,7 @@ class FaqController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/faq",
+     *     path="/api/v1/faq",
      *     tags={"information"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

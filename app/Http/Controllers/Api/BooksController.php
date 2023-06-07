@@ -21,7 +21,7 @@ class BooksController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/old-testament",
+     *     path="/api/v1/old-testament",
      *     tags={"books"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
@@ -281,7 +281,7 @@ class BooksController extends Controller
     }
     /**
      * @OA\Get(
-     *     path="/new-testament",
+     *     path="/api/v1/new-testament",
      *     tags={"books"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

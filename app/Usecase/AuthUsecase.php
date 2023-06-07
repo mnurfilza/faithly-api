@@ -79,15 +79,11 @@ class AuthUsecase implements AuthUsecaseInterface
         ];
 
         $detailResp = $this->eloqUserDetail->Store($userDetail);
-        $link = env('BASE_URL') . '/activate?token=' . $token;
-        if ($platform == 'mobile') {
-            $link = 'myapp://success-verification?token=' . $token;
-
-        }
+        
 
         $mailData = [
             'title' => 'Verification Email',
-            'body' => $link
+            'body' => $token
         ];
 
         //send to email link forgot password

@@ -18,7 +18,7 @@ class ChapterController extends Controller
     }
     /**
      * @OA\Get(
-     *     path="/chapters",
+     *     path="/api/v1/chapters",
      *     tags={"chapter"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",
