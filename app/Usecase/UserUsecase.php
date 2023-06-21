@@ -266,7 +266,7 @@ class UserUsecase implements UserUsecaseInterface
         }
 
         //add to billing if freeplan
-        if (count($data['data'])>2) {
+        if (count($data['data'])<=2) {
             //add billing free
             $now = Carbon::now();
             $futureDate = $now->addDays(7);
