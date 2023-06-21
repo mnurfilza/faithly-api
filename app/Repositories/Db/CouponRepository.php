@@ -38,4 +38,10 @@ class CouponRepository implements CouponRepositoryInterface
             'exp_date'=>$data['exp_date'],
         ]);
     }
+
+
+    public function couponInquiry($data)
+    {
+        return  $this->coupon->query()->where('coupon_code', $data)->get();
+    }
 }

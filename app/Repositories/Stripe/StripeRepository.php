@@ -13,10 +13,12 @@ class StripeRepository implements StripeInterface
     protected $stripe;
     public function __construct()
     {
+        
         $this->stripe = new \Stripe\StripeClient(env('STRIPE_API_KEY'));
     }
     public function PaymentIntent($data)
     {
+        
         $paymentIntent = $this->stripe->paymentIntents->create([
             'amount'=> $data['amount'],
             'currency'=>'usd',

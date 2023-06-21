@@ -28,7 +28,7 @@ class Payment extends Controller
      *    @OA\RequestBody(
      *        @OA\JsonContent(
      *    @OA\Property(
-     *        property="card",
+     *        property="stripe_payment_method_id",
      *        type="string",
      *        description="",
      *        nullable=false,
@@ -51,15 +51,15 @@ class Payment extends Controller
      *        description="",
      *        nullable=false,
      *    ),
-     *  @OA\Property(
-     *        property="is_renewal",
-     *        type="boolean",
-     *        description="",
-     *        nullable=false,
-     *    ),
      *      @OA\Property(
      *        property="next_payment_date",
      *        type="date",
+     *        description="",
+     *        nullable=false,
+     *    ),
+     *  @OA\Property(
+     *        property="coupon",
+     *        type="string",
      *        description="",
      *        nullable=false,
      *    ),
@@ -97,26 +97,13 @@ class Payment extends Controller
      *                type="object",
      *                description="List of data",
      *                    @OA\Property (
-     *                         property="subject",
+     *                         property="status",
      *                        type="string",
      *                        description="",
      *                        nullable=false,
      *                         example=""
      *                      ),
-     *                      @OA\Property (
-     *                          property="to",
-     *                          type="string",
-     *                          description="",
-     *                          nullable=false,
-     *                          example=""
-     *                           ),
-     *                       @OA\Property (
-     *                          property="from",
-     *                          type="string",
-     *                          description="",
-     *                          nullable=false,
-     *                          example=""
-     *                           ),
+     *                 
      *
      *                       )
      *                 )
@@ -202,9 +189,8 @@ class Payment extends Controller
                 'disc'=> $request['disc'],
                 'amount'=> $request['amount'],
                 'user_detail_id'=>$request['user_detail_id'],
-                'is_autorenewal'=>$request['is_autorenewal'],
                 'next_payment_date'=> $request['next_payment_date'],
-                'card'=> $request['card']
+                'stripe_payment_method_id'=> $request['stripe_payment_method_id']
             ]);
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);

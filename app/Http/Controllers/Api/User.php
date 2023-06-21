@@ -1178,8 +1178,8 @@ class User extends Controller
      *        description="",
      *        nullable=false,
      *    ),
-     *    @OA\Property(
-     *        property="email",
+     *      @OA\Property(
+     *        property="subs_id",
      *        type="string",
      *        description="",
      *        nullable=false,
@@ -1196,6 +1196,26 @@ class User extends Controller
      *        description="",
      *        nullable=false,
      *    ),
+     *      @OA\Property  (
+     *         property="data",
+     *         type="array",
+     *         description="List of data",
+     *         @OA\Items(
+     *                @OA\Property (
+     *                  property="email",
+     *                  type="string",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *                @OA\Property (
+     *                  property="year_of_birth",
+     *                  type="string",
+     *                  description="",
+     *                  nullable=false,
+     *                  ),
+     *               
+     *              )
+     *           ),
      *
      *       )
      *     ),
@@ -1384,16 +1404,19 @@ class User extends Controller
             ];
 
             $request->validate([
-                'email' => 'required',
             ], $messages);
             $resp = $this->user->addChild([
-                'prefix'=>$request->prefix,
-                'email'=>$request->email,
+                'subs_id'=> $request->subs_id,
+                'prefix'=> $request->prefix,
                 'parent_email'=> $request->admin_email,
-                'parent_id'=> $request->organization_id
+                'parent_id'=> $request->parent_id,
+                'data'=>$request->data,
             ]);
         } catch (\Throwable $th) {
-
+            print_r($th);
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
         }
+
+        return $resp;
     }
 }

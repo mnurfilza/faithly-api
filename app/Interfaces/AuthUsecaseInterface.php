@@ -17,6 +17,8 @@ interface AuthUsecaseInterface{
     public function LoginChild($request);
 
     public function ResendForgotPasswordLink($data);
+
+    public function ChooseRoleAndPlan($data);
  }
 
 

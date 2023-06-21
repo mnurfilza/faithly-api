@@ -7,6 +7,7 @@ use App\Interfaces\AuthUsecaseInterface;
 use App\Interfaces\ForgotPasswordInterface;
 use App\Interfaces\OrganizationInterface;
 use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\SubscriptionInterface;
 use App\Interfaces\UserDetailRepoInterface;
 use App\Interfaces\UserInterface;
 use App\Mail\SendEmail;
@@ -26,6 +27,7 @@ class AuthUsecase implements AuthUsecaseInterface
     protected $org;
 
     protected $forgotPassw;
+    protected $subs;
 
     function __construct(
         UserInterface           $eloquentUser,
@@ -33,6 +35,7 @@ class AuthUsecase implements AuthUsecaseInterface
         RoleRepositoryInterface $roleEloq,
         OrganizationInterface   $org,
         ForgotPasswordInterface $fg,
+        SubscriptionInterface $subs,
     )
     {
         $this->eloqUserDetail = $eloqUserDetail;
@@ -40,6 +43,7 @@ class AuthUsecase implements AuthUsecaseInterface
         $this->eloquentUser = $eloquentUser;
         $this->org = $org;
         $this->forgotPassw = $fg;
+        $this->subs = $subs;
     }
 
     public function Register(Request $request, $platform)
@@ -79,7 +83,7 @@ class AuthUsecase implements AuthUsecaseInterface
         ];
 
         $detailResp = $this->eloqUserDetail->Store($userDetail);
-        
+
 
         $mailData = [
             'title' => 'Verification Email',
@@ -93,12 +97,13 @@ class AuthUsecase implements AuthUsecaseInterface
             return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $request['email']], "Failed Send to " . ' ' . $request['email']);
         }
 
-       
+
         return ApiResponse::successResponse([
             'subs_id' => $detailResp->subs_id,
             'user_detail_id' => $detailResp->id,
             'org_id' => $detailResp->org_id,
             'timer'=> $seconds
+
         ], "Success Register", 200);
     }
 
@@ -183,7 +188,7 @@ class AuthUsecase implements AuthUsecaseInterface
 
         }
         $mailData = [
-            'title' => 'Forgot Password', 
+            'title' => 'Forgot Password',
             'body' => $link,
         ];
 
@@ -261,7 +266,7 @@ class AuthUsecase implements AuthUsecaseInterface
         if ($request->query('token') == "") {
             return ApiResponse::errorResponse('Token Cannot Be Empty', '', 400);
         }
-        
+
         $token = $this->eloquentUser->getUserByTokenActivation($request->query('token'));
         if ($token == null) {
             return ApiResponse::errorResponse('', 'Unknown Token', 400);
@@ -356,6 +361,44 @@ class AuthUsecase implements AuthUsecaseInterface
 
         return ApiResponse::errorResponse('Failed To Request Forgot Password', '', 500);
     }
+
+    public function ChooseRoleAndPlan($data)
+    {
+        $orgId = "";
+        $prefix = "";
+        //check role
+        $role = $this->roleEloq->getRoleByName($data['role_name']);
+
+        //create orgnaization if user choose org
+        if ($role['name'] == 'Organization') {
+            $org = $this->org->storeOrganization([
+                'name'=> 'ORG-USER'.$data['user_id'],
+                'number_users'=> 0,
+            ]);       
+            $orgId = $org['id'];
+        }
+        
+       
+        //update to userdetail regarding subs id and role id
+        $this->eloqUserDetail->updateRoleandSubscription([
+            'id'=> $data['user_id'],
+            'role_id'=>$role['id'],
+            'org_id'=> $orgId || "",
+            'subs_id'=> $data['subs_id']
+        ]);
+
+        //subscription detail
+
+        $subscription = $this->subs->getSubs($data['subs_id']);
+
+        //return response amount of subscription
+        return ApiResponse::successResponse(['user_id'=> $data['user_id'],
+        'prefix'=>  Str::random(3),
+        'price'=> $subscription->price,
+        'subs_type'=> $subscription->subs_type], 'Succes Choose role and plan', 200);
+    }
+
+    
 }
 
 

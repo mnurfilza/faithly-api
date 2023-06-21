@@ -45,6 +45,12 @@ use Illuminate\Notifications\Notifiable;
  *        type="integer",
  *        description="",
  *        nullable=false,
+ *    ),
+ *  @OA\Property(
+ *        property="stripe_payment_method_id",
+ *        type="string",
+ *        description="",
+ *        nullable=false,
  *    )
  * )
  */

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Authentication;
 use App\Http\Controllers\Api\BooksController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\ChapterController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\FriendController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\LevelController;
@@ -53,9 +54,12 @@ Route::prefix('v1')->group(function () {
     Route::get('/topic/{topic_id}', [TopicController::class, 'getVerseByTopic']);
     Route::get('/topics', [TopicController::class, 'getTopics']);
     Route::get('/level/{chapter_id}', [LevelController::class, 'getLevelChapter']);
-    Route::post('/pay', [Payment::class, 'InitialPayment']);
+    Route::post('/init-payment', [Payment::class, 'InitialPayment']);
     Route::get('/success-veirification-mobile', [Authentication::class, 'SuccesVerification'])->name('success-veirification-mobile');
-
+    Route::put('/choose-plan-role',[Authentication::class,'chooseRoleAndPlan']);
+    Route::post('/coupon/inquiry',[CouponController::class,'CouponInquiry']);
+    Route::post('/add-organization-member', [User::class,'addOrganizationMember']);
+    Route::post('/add-childern', [User::class,'addChildern']);
     Route::middleware('jwt.api')->group(function () {
         Route::controller(CardController::class)->group(function () {
             Route::get('/card', 'ListCardPayment');
@@ -67,8 +71,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/user/{id}', 'getProfileUser');
             Route::get('/list-child', 'ListChild');
             Route::get('/list-donation', 'ListChild');
-            Route::post('/add-organization-member', 'addOrganizationMember');
-            Route::post('/add-childern', 'addChildern');
+         
 
         });
 

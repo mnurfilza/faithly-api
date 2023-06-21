@@ -8,5 +8,6 @@ interface SubscriptionInterface
     public function listSubscription($data);
 
     public function updateSubs($data);
+    public function getSubs($data);
 
 }

@@ -29,14 +29,48 @@ class SubscriptionRepository implements SubscriptionInterface
     public function listSubscription($data)
     {
 
-        $res = $this->subs->get();
+        $res = $this->subs->query()
+        ->join('subscription_type',
+            'subscription.subscription_type',
+            '=',
+            'subscription_type.id')
+            ->leftJoin('list_feature','subscription.id','=','list_feature.subscription_id');
         if ($data == "monthly")
         {
-            return $res->makeHidden(['yearly_amount']);
-        }else if ($data == "yearly"){
-            return $res->makeHidden(['monthly_amount']);
+             $res->where('subscription_type.name','=','Monthly');
+        } else if ($data == "yearly"){
+             $res->where('subscription_type.name','=','Yearly');
         }
-        return $res;
+
+
+        $result = $res->get(array('subscription.*','list_feature.feature as feature'));
+        $data = [];
+        $processedItems = [];
+        $features = [];
+        foreach ($result as $item) {
+            if (in_array($item->id, $processedItems)) {
+                array_push($data[count($data) - 1]['feature'] , $item->feature);
+                continue;
+            }
+    
+            $data[] = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'users' => $item->users,
+                'price' => $item->price,
+                'feature' => array_filter([$item->feature]),
+            ];
+
+            array_push($features, $item->feature);
+            $processedItems[] = $item->id;
+
+        }
+
+        
+
+
+
+        return $data;
 
     }
 
@@ -45,5 +79,16 @@ class SubscriptionRepository implements SubscriptionInterface
         return $this->subs->where('id',$data['id'])->update([
             'monthly_amount'=> $data['monthly_amount'],
             'yearly_amount'=> $data['yearly_amount'],'users'=>$data['users']]);
+    }
+
+    public function getSubs($data)
+    {
+
+        return $this->subs->query()->join('subscription_type',
+        'subscription.subscription_type',
+        '=',
+        'subscription_type.id')->
+        where('subscription.id','=',$data)->
+        first(array('subscription.*','subscription_type.name as subs_type'));
     }
 }

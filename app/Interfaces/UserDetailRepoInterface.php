@@ -5,9 +5,11 @@ interface UserDetailRepoInterface{
     public function Store($data);
 
     public function getUserDetailByUserId($id);
-    public function updateRole($data);
+    public function updateRoleandSubscription($data);
 
     public function checkUserByYear($data);
+
+
 
 
 }

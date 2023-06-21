@@ -151,7 +151,7 @@ class UserUsecase implements UserUsecaseInterface
             'phone_number' => $data['phone_number'] ?? "",
             'role_id' => $role->id,
             'parent_id' => 0,
-            'org_id' => $data['organization_id']??0,
+            'org_id' => $data['organization_id'] ?? 0,
             'year_of_birth' => $data['year_of_birth'] ?? "",
             'subs_id' => $data['subs_id'] ?? 0,
 
@@ -186,55 +186,72 @@ class UserUsecase implements UserUsecaseInterface
 
     public function addChild($data)
     {
-        $isEmailExist = $this->userInterface->checkEmail($data['email']);
 
-        if ($isEmailExist) {
-            return ApiResponse::errorResponse("Email Already Exist", '', 409);
-        }
+    
+    
+        foreach ($data['data'] as $value) { 
+        
+            $email = $data['parent_email'];
+            if ($value['email'] != "") {
+                $isEmailExist = $this->userInterface->checkEmail(['email'=>$value['email'],'username'=>$value['email']]);
 
-        $token = Str::random(64);
+                if ($isEmailExist) {
+                    return ApiResponse::errorResponse("Email Already Exist", '', 409);
+                }
+
+                $email = $value['email'];
+            }
+
+            $token = Str::random(64);
 
 
-        //get role by name
-        $role = $this->roleEloq->getRoleByName('Childern');
-        if ($role == null) {
-            return ApiResponse::errorResponse('Role' . ' ' . 'Admin' . ' ' . "Doesn't Exists", '', 404);
-        }
-        $randomNumber = rand(1, 999999);
-        $sixDigitNumber = str_pad($randomNumber, 6, '0', STR_PAD_LEFT);
-        $suffix = Str::random(3);
-        $data['username']= $data['prefix'].$suffix;
-        $data['password'] = $sixDigitNumber;
-        //save to user
-        $user = $this->userInterface->storeUser($data, $token,2);
+            //get role by name
+            $role = $this->roleEloq->getRoleByName('Childern');
+            if ($role == null) {
+                return ApiResponse::errorResponse('Role' . ' ' . 'Admin' . ' ' . "Doesn't Exists", '', 404);
+            }
+            $randomNumber = rand(1, 999999);
+            $sixDigitNumber = str_pad($randomNumber, 6, '0', STR_PAD_LEFT);
+            $suffix = Str::random(3);
+            $username= $data['prefix'] . $suffix;
+            $password = $sixDigitNumber;
+            //save to user
 
-        //save to user detail
+            $user = $this->userInterface->storeUser(['username'=> $username, 
+            'password'=> $password,
+            'email'=> $value['email'] ?? ""], $token, 2);
 
-        $userDetail = [
-            'user_id' => $user->id,
-            'fullname' => $data['fullname'] ?? "",
-            'phone_number' => $data['phone_number'] ?? "",
-            'role_id' => $role->id,
-            'parent_id' => $data['parent_id']??0,
-            'org_id' => 0,
-            'year_of_birth' => $data['year_of_birth'] ?? "",
-            'subs_id' => $data['subs_id'] ?? 0,
+            //save to user detail
 
-        ];
+            $userDetail = [
+                'user_id' => $user->id,
+                'fullname' => "",
+                'phone_number' => "",
+                'role_id' => $role->id,
+                'parent_id' => $data['parent_id'] ?? 0,
+                'org_id' => 0,
+                'year_of_birth' => $value['year_of_birth'] ?? "",
+                'subs_id' => $data['subs_id'] ?? 0,
 
-        $detailResp = $this->eloqUserDetail->Store($userDetail);
+            ];
 
-        $mailData = [
-            'title' => 'Verification Email',
-            'body' => 'password :'. $sixDigitNumber
-        ];
+            $detailResp = $this->eloqUserDetail->Store($userDetail);
 
-        //send to email link forgot password
-        $mail = Mail::to($data['parent_email'])->send(new SendEmail($mailData, "Verification Email"));
+            $mailData = [
+                'title' => 'Verification Email',
+                'body' =>  $sixDigitNumber
+                
+            ];
 
-        if ($mail instanceof \Illuminate\Mail\SentMessage) {
-            //email sent success
-            return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $data['email']], "Link Alredy Send to " . ' ' . $data['email']);
+            //need to throw mq
+            
+
+            // $mail = Mail::to($email)->queue(new SendEmail($mailData, "Verification Email"));
+            // if (!$mail instanceof \Illuminate\Mail\SentMessage) {
+            //     //email sent success
+            //     return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $email], "Failed Send to " . ' ' . $email);
+            // }
+    
         }
 
 
@@ -269,20 +286,19 @@ class UserUsecase implements UserUsecaseInterface
             return ApiResponse::errorResponse('Role' . ' ' . 'Admin' . ' ' . "Doesn't Exists", '', 404);
         }
 
-        $data['username']= $data['prefix'].$suffix;
+        $data['username'] = $data['prefix'] . $suffix;
         $data['password'] = $password;
         //save to user
-        $user = $this->userInterface->storeUser($data, $token,2);
+        $user = $this->userInterface->storeUser($data, $token, 2);
 
         //save to user detail
-
         $userDetail = [
             'user_id' => $user->id,
             'phone_number' => $data['phone_number'] ?? "",
             'role_id' => $role->id,
             'parent_id' => 0,
             'fullname' => $data['fullname'] ?? "",
-            'org_id' => $data['organization_id']??0,
+            'org_id' => $data['organization_id'] ?? 0,
             'year_of_birth' => $data['year_of_birth'] ?? "",
             'subs_id' => $data['subs_id'] ?? 0,
 
@@ -292,7 +308,7 @@ class UserUsecase implements UserUsecaseInterface
 
         $mailData = [
             'title' => 'Verification Email',
-            'body' => 'password :'. $password,
+            'body' => 'password :' . $password,
         ];
 
         //send to email link forgot password

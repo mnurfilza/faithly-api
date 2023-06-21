@@ -58,7 +58,7 @@ class SubscriptionUsecase implements SubscriptionUsecaseInterface
             'role_id' => $rle->id,
             'org_id' => $org_id,
         ];
-        $this->ud->updateRole($data);
+        $this->ud->updateRoleandSubscription($data);
         return ApiResponse::successResponse($data,'success update subscription');
 
     }

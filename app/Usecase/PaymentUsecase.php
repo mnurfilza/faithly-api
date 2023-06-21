@@ -27,7 +27,7 @@ class PaymentUsecase implements PaymentUsecaseInterface
        
 
         $total = $data['amount'] + $data['disc'];
-        $randNumb = Str::randomNumber(3);
+        $randNumb = Str::random(3);
         $now = Carbon::now();
 
         $inv = 'INV-'.$randNumb.$now->format('dmy');
@@ -41,16 +41,14 @@ class PaymentUsecase implements PaymentUsecaseInterface
         //create billing for next payment
         $nextPayment =$this->bill->CreateBilling([
             'user_detail_id'=> $data['user_detail_id'],
-            'is_autorenewal'=>$data['is_autorenewal'],
             'next_payment_date'=> $data['next_payment_date'],
             'status_id'=> 7
         ]);
 
-        //payment integrate to stripe
-
+        //payment integrate to stripe˜
         $paid = $this->stripe->PaymentIntent([
             'amount'=>$total,
-            'payment_method'=> $data['card']
+            'payment_method'=> $data['stripe_payment_method_id']
         ]);
 
 

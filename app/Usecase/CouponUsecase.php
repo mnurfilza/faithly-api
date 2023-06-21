@@ -32,4 +32,9 @@ class CouponUsecase implements CouponUsecaseInterface
         $this->coupon->updateCoupon($request);
         return ApiResponse::successResponse($request,'Success Add Coupon', 200);
     }
+
+    public function couponInquiry($data)
+    {
+        return ApiResponse::successResponse($this->coupon->couponInquiry($data),"Success Inquiry Coupon",200);
+    }
 }

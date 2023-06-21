@@ -12,7 +12,7 @@ class Payment extends Model
         'id',
         'billing_id',
         'status_id',
-        'coupon_id',
+        'coupon',
         'total',
         'payment_method_id',
         'price_subscription',

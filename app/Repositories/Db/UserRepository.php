@@ -21,6 +21,8 @@ class UserRepository implements UserInterface
 
     public function storeUser($data, $activationToken, $status)
     {
+        
+        
         return $this->userModel->create([
             'username' => $data['username'],
             'email' => $data['email'],

@@ -1530,13 +1530,189 @@ class Authentication extends Controller
             // $userAgent = $request->header('User-Agent');
             $token = $request->query('token');
 
-            
+
             return redirect()->away('myapp://success-verification?token=' . $token);
-          
+
         } catch (\Throwable $th) {
             return ApiResponse::errorResponse('', $th->getMessage(), 500);
 
         }
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/v1/choose-plan-role",
+     *     tags={"Authentication"},
+     *     summary="Returns a Sample API response",
+     *     description="A sample greeting to test out the API",
+     *    @OA\RequestBody(
+     *        @OA\JsonContent(
+     *    @OA\Property(
+     *        property="user_id",
+     *        type="string",
+     *        description="",
+     *        nullable=false,
+     *    ),
+     *     @OA\Property(
+     *        property="role_name",
+     *        type="string",
+     *        description="",
+     *        nullable=false,
+     *    ),
+        *  @OA\Property(
+        *        property="subs_id",
+        *        type="string",
+        *        description="",
+        *        nullable=false,
+        *    ),
+     *       )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=200
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Succes Choose role and plan"
+     *                  ),
+     *              ),
+     *
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *                    @OA\Property (
+     *                         property="user_id",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *                     @OA\Property (
+     *                         property="price",
+     *                        type="integer",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *                     @OA\Property (
+     *                         property="subs_type",
+     *                        type="string",
+     *                        description="",
+     *                        nullable=false,
+     *                         example=""
+     *                      ),
+     *
+     *                       )
+     *                 )
+     *
+     *      ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Internal Servier Error",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=500
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example=""
+     *                  ),
+     *             @OA\Property (
+     *                property="response_debug_param",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="internal Server Error"
+     *                  ),
+     *              ),
+     *
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Email Not found",
+     *         @OA\JsonContent (
+     *            schema="Success List Card",
+     *            @OA\Property(
+     *                property="meta",
+     *                type="object",
+     *                description="",
+     *                nullable=false,
+     *            @OA\Property (
+     *                property="response_code",
+     *                type="integer",
+     *                description="",
+     *                nullable=false,
+     *                example=404
+     *              ),
+     *            @OA\Property (
+     *                property="response_message",
+     *                type="string",
+     *                description="",
+     *                nullable=false,
+     *                example="Email Not Found"
+     *                  ),
+     *
+     *              ),
+     *             @OA\Property  (
+     *                property="data",
+     *                type="object",
+     *                description="List of data",
+     *
+     *                  )
+     *              )
+     *          )
+     *
+     *      )
+     * )
+     */
+
+    public function chooseRoleAndPlan(Request $request){
+        try {
+            
+            $res = $this->user->chooseRoleAndPlan([
+                'user_id'=>$request['user_id'],
+                'role_name'=>$request['role_name'],
+                'subs_id'=> $request['subs_id']
+            ]);
+
+        } catch (\Throwable $th) {
+            return ApiResponse::errorResponse('', $th->getMessage(), 500);
+
+        }
+
+        return $res;
     }
 
 }

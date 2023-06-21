@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('user_detail_id')->references('id')->on('user_detail');
             $table->unsignedBigInteger('payment_method_id');
             $table->foreign('payment_method_id')->references('id')->on('payment_method');
-            $table->boolean('is_autorenewal');
             $table->date('next_payment_date');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');

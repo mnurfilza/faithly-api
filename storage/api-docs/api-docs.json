@@ -1354,6 +1354,174 @@
                 }
             }
         },
+        "/api/v1/choose-plan-role": {
+            "put": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "3fd3a8713a846080115432feb48b517b",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "role_name": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "subs_id": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Succes Choose role and plan",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "properties": {
+                                                "user_id": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "price": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "subs_type": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Email Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Email Not Found",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/old-testament": {
             "get": {
                 "tags": [
@@ -2620,6 +2788,164 @@
                                                 "prev_page": {
                                                     "description": "",
                                                     "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/coupon/inquiry": {
+            "post": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "ac5417f9fab9253ed8ac36b48eed2e03",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "coupon_code": {
+                                        "description": "",
+                                        "type": "string",
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Success Request Get Coupon",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "name": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "disc": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Email Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Email Not Found",
                                                     "nullable": false
                                                 }
                                             },
@@ -5077,7 +5403,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "card": {
+                                    "stripe_payment_method_id": {
                                         "description": "",
                                         "type": "string",
                                         "nullable": false
@@ -5097,15 +5423,15 @@
                                         "type": "string",
                                         "nullable": false
                                     },
-                                    "is_renewal": {
-                                        "description": "",
-                                        "type": "boolean",
-                                        "nullable": false
-                                    },
                                     "next_payment_date": {
                                         "description": "",
                                         "type": "string",
                                         "format": "date",
+                                        "nullable": false
+                                    },
+                                    "coupon": {
+                                        "description": "",
+                                        "type": "string",
                                         "nullable": false
                                     }
                                 },
@@ -5144,19 +5470,7 @@
                                         "data": {
                                             "description": "List of data",
                                             "properties": {
-                                                "subject": {
-                                                    "description": "",
-                                                    "type": "string",
-                                                    "example": "",
-                                                    "nullable": false
-                                                },
-                                                "to": {
-                                                    "description": "",
-                                                    "type": "string",
-                                                    "example": "",
-                                                    "nullable": false
-                                                },
-                                                "from": {
+                                                "status": {
                                                     "description": "",
                                                     "type": "string",
                                                     "example": "",
@@ -5303,10 +5617,13 @@
                         }
                     },
                     {
-                        "name": "Authentication",
-                        "in": "header",
-                        "description": "Provides user authentication token",
-                        "required": true
+                        "name": "subs_type",
+                        "in": "query",
+                        "description": "subs_type",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -5393,15 +5710,18 @@
                                                         "type": "integer",
                                                         "nullable": false
                                                     },
-                                                    "yearly_amount": {
+                                                    "price": {
                                                         "description": "",
                                                         "type": "integer",
                                                         "nullable": false
                                                     },
-                                                    "monthly_amount": {
+                                                    "feature": {
                                                         "description": "",
-                                                        "type": "integer",
-                                                        "nullable": false
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "nullable": true
                                                     }
                                                 },
                                                 "type": "object"
@@ -7113,7 +7433,7 @@
                                         "type": "string",
                                         "nullable": false
                                     },
-                                    "email": {
+                                    "subs_id": {
                                         "description": "",
                                         "type": "string",
                                         "nullable": false
@@ -7127,6 +7447,25 @@
                                         "description": "",
                                         "type": "string",
                                         "nullable": false
+                                    },
+                                    "data": {
+                                        "description": "List of data",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "email": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "nullable": false
+                                                },
+                                                "year_of_birth": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -7580,6 +7919,11 @@
                     "status_id": {
                         "description": "",
                         "type": "integer",
+                        "nullable": false
+                    },
+                    "stripe_payment_method_id": {
+                        "description": "",
+                        "type": "string",
                         "nullable": false
                     }
                 },

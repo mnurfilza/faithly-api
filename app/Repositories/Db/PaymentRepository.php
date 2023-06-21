@@ -18,7 +18,7 @@ class PaymentRepository implements PaymentInterface
     {
         return $this->pay->create([
             'billing_id'=> $data['billing_id'],
-            'coupon_id'=>$data['coupon_id'],
+            'coupon'=>$data['coupon'],
             'total'=> $data['total'],
             'payment_date'=> $data['payment_date'],
             'invoince_number'=> $data['invoice_number'],

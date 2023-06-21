@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(VersionSeeder::class);
         // $this->call(BooksSeeder::class);
         // $this->call(BooksNameSeed::class);
-    //    $this->call(ChapterSeeder::class);
+        //    $this->call(ChapterSeeder::class);
 
 //        $this->call(HHowToPlaySeeder::class);
         // $this->call(FaqSeeder::class);
@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(VersesSeeder::class);
         // $this->call(TopicSeeder::class);
         // $this->call(LevelModelSeeder::class);
-        $this->call(GroupType::class);
+//        $this->call(GroupType::class);
+    $this->call(list_feature::class);
     }
 
 

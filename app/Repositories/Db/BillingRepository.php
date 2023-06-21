@@ -15,7 +15,6 @@ class BillingRepository  implements BillingInterface
     {
         return $this->bill->create([
             'user_detail_id'=> $data['user_detail_id'],
-            'is_autorenewal'=>$data['is_autorenewal'],
             'next_payment_date'=> $data['next_payment_date'],
             'status_id'=> $data['status_id']
         ]);

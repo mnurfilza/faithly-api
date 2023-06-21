@@ -18,8 +18,7 @@ return new class extends Migration
             $table->foreign('billing_id')->references('id')->on('billing');
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
-            $table->unsignedBigInteger('coupon_id');
-            $table->foreign('coupon_id')->references('id')->on('coupon');
+            $table->string('coupon');
             $table->float('total');
             $table->float('price_subscription');
             $table->timestamp('payment_date');

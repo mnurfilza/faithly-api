@@ -4,6 +4,7 @@ namespace App\Repositories\Db;
 
 use App\Interfaces\UserDetailRepoInterface;
 use App\Models\UserDetail;
+use GuzzleHttp\Psr7\Query;
 
 class UserDetailRepository implements UserDetailRepoInterface
 {
@@ -35,9 +36,14 @@ class UserDetailRepository implements UserDetailRepoInterface
         return $this->userDetail->where('user_id', $id)->first();
     }
 
-    public function updateRole($data)
+    public function updateRoleandSubscription($data)
     {
-        return $this->userDetail->where('user_id', $data['id'])->update(['role_id' => $data['role_id'], 'org_id' => $data['org_id']]);
+        $query = ['role_id' => $data['role_id'], 'subs_id'=> $data['subs_id']];
+        if ($data['org_id'] != ""){
+            $query['org_id'] = $data['org_id'];
+
+        }
+        return $this->userDetail->where('user_id', $data['id'])->update($query);
     }
 
     public function checkUserByYear($data)

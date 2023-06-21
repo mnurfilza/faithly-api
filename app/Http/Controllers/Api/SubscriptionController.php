@@ -81,11 +81,15 @@ class SubscriptionController extends Controller
      *          )
      *
      *     ),
-     *     @OA\Parameter(
-     *         name="Authentication",
-     *         description="Provides user authentication token",
-     *         in="header",
-     *         required=true
+     *      @OA\Parameter(
+     *          name="subs_type",
+     *          description="subs_type",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *
      *     ),
      *
      *     @OA\Response(
@@ -161,7 +165,7 @@ class SubscriptionController extends Controller
      *                type="array",
      *                description="List of data",
      *              @OA\Items(
-     *     @OA\Property (
+     *                @OA\Property (
      *                  property="id",
      *                  type="integer",
      *                  description="",
@@ -180,16 +184,17 @@ class SubscriptionController extends Controller
      *                  nullable=false,
      *                  ),
      *                @OA\Property (
-     *                  property="yearly_amount",
+     *                  property="price",
      *                  type="integer",
      *                  description="",
      *                  nullable=false,
      *                  ),
      *                 @OA\Property (
-     *                  property="monthly_amount",
-     *                  type="integer",
+     *                  property="feature",
+     *                  type="array",
      *                  description="",
-     *                  nullable=false,
+     *                  nullable=true,
+     *                  @OA\Items(type="string")
      *                  ),
      *              )
      *

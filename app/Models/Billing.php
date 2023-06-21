@@ -11,7 +11,6 @@ class Billing extends Model
     protected $fillable = [
         'id',
         'user_detail_id',
-        'is_autorenewal',
         'next_payment_date',
         'status_id'
     ];

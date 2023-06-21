@@ -16,8 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('users');
-            $table->float('yearly_amount');
-            $table->float('monthly_amount');
+            $table->float('price');
+            $table->unsignedBigInteger('subscription_type');
+            $table->foreign('subscription_type')->references('id')->on('subscription_type');
             $table->timestamps();
 
 
