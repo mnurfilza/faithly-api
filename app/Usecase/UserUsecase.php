@@ -3,7 +3,9 @@
 namespace App\Usecase;
 
 use App\Helper\ApiResponse;
+use App\Interfaces\BillingInterface;
 use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\SubscriptionInterface;
 use App\Interfaces\UserDetailRepoInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\UserUsecaseInterface;
@@ -11,6 +13,7 @@ use App\Mail\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserUsecase implements UserUsecaseInterface
 {
@@ -20,17 +23,23 @@ class UserUsecase implements UserUsecaseInterface
     protected $userInterface;
     protected $eloqUserDetail;
 
+    protected $subs;
+    protected $bill;
 
     public function __construct(
         UserInterface           $userInterface,
         UserDetailRepoInterface $eloqUserDetail,
         RoleRepositoryInterface $roleEloq,
+        BillingInterface $bill,
+        SubscriptionInterface $subs,
 
     )
     {
         $this->userInterface = $userInterface;
         $this->eloqUserDetail = $eloqUserDetail;
         $this->roleEloq = $roleEloq;
+        $this->bill = $bill;
+        $this->subs = $subs;
     }
 
     //mobile API
@@ -187,10 +196,10 @@ class UserUsecase implements UserUsecaseInterface
     public function addChild($data)
     {
 
-    
-    
+        //inquiry subscription to get price
+        $subs = $this->subs->getSubs($data['subs_id']);
+
         foreach ($data['data'] as $value) { 
-        
             $email = $data['parent_email'];
             if ($value['email'] != "") {
                 $isEmailExist = $this->userInterface->checkEmail(['email'=>$value['email'],'username'=>$value['email']]);
@@ -235,6 +244,8 @@ class UserUsecase implements UserUsecaseInterface
 
             ];
 
+
+
             $detailResp = $this->eloqUserDetail->Store($userDetail);
 
             $mailData = [
@@ -254,11 +265,24 @@ class UserUsecase implements UserUsecaseInterface
     
         }
 
+        //add to billing if freeplan
+        if (count($data['data'])>2) {
+            //add billing free
+            $now = Carbon::now();
+            $futureDate = $now->addDays(7);
+            $this->bill->CreateBilling([
+                'user_detail_id'=> $data['parent_id'],
+                'next_payment_date'=>  $futureDate,
+                'status_id'=> 7
+            ]);
+        }
+
 
         return ApiResponse::successResponse([
             'subs_id' => $detailResp->subs_id,
             'user_detail_id' => $detailResp->id,
             'org_id' => $detailResp->org_id,
+            'price'=> $subs['price'],
         ], "Success Register", 200);
     }
 
