@@ -35,8 +35,7 @@ class FriendRepository implements FriendlistInterface
             ->where('friend.user_id', '=', $data['user_id']);
 
         if ($data['isRequest'] === "1") {
-            $query->join('statuses', 'friend.status_id', '=', 'statuses.id')
-                ->where('statuses.name', '=', 'Request');
+            $query->where('statuses.name', '=', 'Request');
         }
         if ($data['search'] !== "") {
             $query

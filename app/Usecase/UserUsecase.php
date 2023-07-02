@@ -198,9 +198,8 @@ class UserUsecase implements UserUsecaseInterface
 
         //inquiry subscription to get price
         $subs = $this->subs->getSubs($data['subs_id']);
-
+        $email = $data['parent_email'];
         foreach ($data['data'] as $value) { 
-            $email = $data['parent_email'];
             if ($value['email'] != "") {
                 $isEmailExist = $this->userInterface->checkEmail(['email'=>$value['email'],'username'=>$value['email']]);
 
@@ -208,8 +207,11 @@ class UserUsecase implements UserUsecaseInterface
                     return ApiResponse::errorResponse("Email Already Exist", '', 409);
                 }
 
+               
                 $email = $value['email'];
             }
+            
+            
 
             $token = Str::random(64);
 
@@ -255,18 +257,15 @@ class UserUsecase implements UserUsecaseInterface
             ];
 
             //need to throw mq
-            
-
-            // $mail = Mail::to($email)->queue(new SendEmail($mailData, "Verification Email"));
-            // if (!$mail instanceof \Illuminate\Mail\SentMessage) {
-            //     //email sent success
-            //     return ApiResponse::successResponse(['subject' => '', 'from' => \env('MAIL_FROM_ADDRESS'), 'to' => $email], "Failed Send to " . ' ' . $email);
-            // }
+            $mail = Mail::to($email)->send(new SendEmail($mailData, "Verification Email"));
+            if (!$mail instanceof \Illuminate\Mail\SentMessage) {
+                return ApiResponse::errorResponse("", "Failed Send to " . ' ' . $email,500);
+            }
     
         }
 
         //add to billing if freeplan
-        if (count($data['data'])<=2) {
+        if (count($data['data']) <= 2) {
             //add billing free
             $now = Carbon::now();
             $futureDate = $now->addDays(7);
@@ -277,10 +276,9 @@ class UserUsecase implements UserUsecaseInterface
             ]);
         }
 
-
         return ApiResponse::successResponse([
             'subs_id' => $detailResp->subs_id,
-            'user_detail_id' => $detailResp->id,
+            'user_detail_id' => $data['parent_id'],
             'org_id' => $detailResp->org_id,
             'price'=> $subs['price'],
         ], "Success Register", 200);

@@ -1251,7 +1251,7 @@ class User extends Controller
      *                type="object",
      *                description="List of data",
      *                    @OA\Property (
-     *                property="subs_id",
+     *                        property="subs_id",
      *                        type="string",
      *                        description="",
      *                        nullable=false,
@@ -1267,6 +1267,13 @@ class User extends Controller
      *                       @OA\Property (
      *                           property="org_id",
      *                           type="string",
+     *                           description="",
+     *                           nullable=false,
+     *                           example=""
+     *                          ),
+     *                      @OA\Property (
+     *                           property="price",
+     *                           type="integer",
      *                           description="",
      *                           nullable=false,
      *                           example=""
@@ -1403,12 +1410,13 @@ class User extends Controller
                 'min' => ':attribute Min :min character'
             ];
 
+
             $request->validate([
             ], $messages);
             $resp = $this->user->addChild([
                 'subs_id'=> $request->subs_id,
                 'prefix'=> $request->prefix,
-                'parent_email'=> $request->admin_email,
+                'parent_email'=> $request->parent_email,
                 'parent_id'=> $request->parent_id,
                 'data'=>$request->data,
             ]);

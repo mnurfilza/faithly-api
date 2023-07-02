@@ -10,11 +10,12 @@ class QuestionHistoryModel extends Model
     use HasFactory;
     protected $fillable = [
         'id',
-        'level_id',
-        'question'
+        'status_id',
+        'question_id',
+        'user_id'
 
 
     ];
-    protected $table = 'question';
+    protected $table = 'question_history';
     protected $guarded = [];
 }

@@ -16,6 +16,291 @@
     ],
     "paths": {
         "/api/v1": {},
+        "/api/v1/answer": {
+            "post": {
+                "tags": [
+                    "Answer"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "Validate Answer",
+                "operationId": "validate answer",
+                "parameters": [
+                    {
+                        "name": "Authentication",
+                        "in": "header",
+                        "description": "Provides user authentication token",
+                        "required": false
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "answer_id": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "nullable": false
+                                    },
+                                    "level_id": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "nullable": false
+                                    },
+                                    "user_detail_id": {
+                                        "description": "",
+                                        "type": "integer",
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Success",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "questions": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "time_per_question": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "general_refs": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "reward_coins": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "chapter_id": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "isFinalLevel": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "status": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Data Not Found",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [
@@ -5138,9 +5423,542 @@
                 "operationId": "level",
                 "parameters": [
                     {
+                        "name": "chapter_id",
+                        "in": "path",
+                        "description": "chapter",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "status",
                         "in": "query",
                         "description": "status",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Success",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "questions": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "time_per_question": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "general_refs": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "reward_coins": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "chapter_id": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "isFinalLevel": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "status": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Data Not Found",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/level/detail/{lvl_id}": {
+            "get": {
+                "tags": [
+                    "level"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "detail level",
+                "parameters": [
+                    {
+                        "name": "lvl_id",
+                        "in": "path",
+                        "description": "level id",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 200,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Success",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "questions": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "time_per_question": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "general_refs": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "reward_coins": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "chapter_id": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    },
+                                                    "isFinalLevel": {
+                                                        "description": "",
+                                                        "type": "integer",
+                                                        "nullable": false
+                                                    },
+                                                    "status": {
+                                                        "description": "",
+                                                        "type": "string",
+                                                        "nullable": false
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Servier Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 500,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "internal Server Error",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "schema": "Success List Card",
+                                    "properties": {
+                                        "meta": {
+                                            "description": "",
+                                            "properties": {
+                                                "response_code": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "example": 404,
+                                                    "nullable": false
+                                                },
+                                                "response_message": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "Data Not Found",
+                                                    "nullable": false
+                                                },
+                                                "response_debug_param": {
+                                                    "description": "",
+                                                    "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "paginate": {
+                                            "description": "",
+                                            "properties": {
+                                                "current_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "total": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "per_page": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "page_count": {
+                                                    "description": "",
+                                                    "type": "integer",
+                                                    "nullable": false
+                                                },
+                                                "next_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                },
+                                                "prev_page": {
+                                                    "description": "",
+                                                    "type": "boolean",
+                                                    "nullable": false
+                                                }
+                                            },
+                                            "type": "object",
+                                            "nullable": false
+                                        },
+                                        "data": {
+                                            "description": "List of data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/level/init/{lvl_id}": {
+            "get": {
+                "tags": [
+                    "level"
+                ],
+                "summary": "Returns a Sample API response",
+                "description": "A sample greeting to test out the API",
+                "operationId": "init level quiz",
+                "parameters": [
+                    {
+                        "name": "lvl_id",
+                        "in": "path",
+                        "description": "level id",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -7518,6 +8336,12 @@
                                                 "org_id": {
                                                     "description": "",
                                                     "type": "string",
+                                                    "example": "",
+                                                    "nullable": false
+                                                },
+                                                "price": {
+                                                    "description": "",
+                                                    "type": "integer",
                                                     "example": "",
                                                     "nullable": false
                                                 }

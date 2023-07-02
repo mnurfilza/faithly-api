@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 
 
 class AuthUsecase implements AuthUsecaseInterface
@@ -56,7 +57,7 @@ class AuthUsecase implements AuthUsecaseInterface
             return ApiResponse::errorResponse("Email or Username Already Exist", '', 409);
         }
 
-        $token = Str::random(64);
+        $token = Str::e(64);
 
 
         //get role by name
@@ -122,6 +123,11 @@ class AuthUsecase implements AuthUsecaseInterface
             return ApiResponse::errorResponse("User Undefined", '', 404);
         }
 
+
+        if (!Hash::check($request['password'], $res->password)) {
+            return ApiResponse::errorResponse("Password Not Match",'',400);
+        }
+
         if ($res->status !== 'Active') {
 
             return ApiResponse::errorResponse("User Not Active", '', 403);
@@ -173,6 +179,7 @@ class AuthUsecase implements AuthUsecaseInterface
         if ($email == null) {
             return ApiResponse::errorResponse("Email Not Found", '', 404);
         }
+        
         $token = Str::random(64);
 
         // save to password token
@@ -182,6 +189,7 @@ class AuthUsecase implements AuthUsecaseInterface
             'isUsed' => false,
             'created_at' => Carbon::now(),
         ]);
+
         $link = env('BASE_URL') . '/change-pass?token=' . $token;
         if ($platform == 'mobile') {
             $link = 'myapp://change-pass?token=' . $token;
@@ -365,7 +373,6 @@ class AuthUsecase implements AuthUsecaseInterface
     public function ChooseRoleAndPlan($data)
     {
         $orgId = "";
-        $prefix = "";
         //check role
         $role = $this->roleEloq->getRoleByName($data['role_name']);
 

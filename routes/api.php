@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\Authentication;
 use App\Http\Controllers\Api\BooksController;
 use App\Http\Controllers\Api\CardController;
@@ -53,7 +54,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/verses', [VersesController::class, 'getVerses']);
     Route::get('/topic/{topic_id}', [TopicController::class, 'getVerseByTopic']);
     Route::get('/topics', [TopicController::class, 'getTopics']);
+    Route::post('/answer',[AnswerController::class,'ValidateAnswer']);
     Route::get('/level/{chapter_id}', [LevelController::class, 'getLevelChapter']);
+    Route::get('/level/detail/{lvl_id}', [LevelController::class, 'getDetailLevel']);
+    Route::get('/level/init/{lvl_id}', [LevelController::class, 'getInitQuiz']);
+
     Route::post('/init-payment', [Payment::class, 'InitialPayment']);
     Route::get('/success-veirification-mobile', [Authentication::class, 'SuccesVerification'])->name('success-veirification-mobile');
     Route::put('/choose-plan-role',[Authentication::class,'chooseRoleAndPlan']);
